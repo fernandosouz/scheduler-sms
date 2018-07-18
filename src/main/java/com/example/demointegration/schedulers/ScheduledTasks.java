@@ -3,20 +3,30 @@ package com.example.demointegration.schedulers;
 import com.example.demointegration.model.DataIntegration;
 import com.example.demointegration.repository.DataIntegrationRepository;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import java.util.Random;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.*;
 
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,17 +34,17 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class ScheduledTasks {
-    private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private final DataIntegrationRepository dataIntegrationDAO;
+    /*private final TokenResponseRepository tokenRepositoryDAO;*/
+    private final Integer n = 2000;
 
     @Autowired
     public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO){
         this.dataIntegrationDAO = dataIntegrationDAO;
     }
 
-    @Scheduled(fixedRate = 2000)
+    /*@Scheduled(fixedDelayString = "${connector.delay}")
     public void scheduleListIntegration() {
         List<DataIntegration> lista;
 
@@ -42,22 +52,35 @@ public class ScheduledTasks {
 
         lista = (List<DataIntegration>) iterable;
 
-        /*Criar list das conexões do ponto que está sendo incluído*/
+        *//*Criar list das conexões do ponto que está sendo incluído*//*
         for(DataIntegration data: lista) {
             data.setIntegrationAttempts(data.getIntegrationAttempts() + 1);
             Random rand = new Random();
-            if((rand.nextInt(50) + 1) < 5){
+            if((rand.nextInt(50) + 1) < 10){
                 data.setIntegrated(true);
                 System.out.println("Atualizando o pra verdadeiro o ID: " + data.getId());
             }
             dataIntegrationDAO.save(data);
         }
-    }
+    }*/
 
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 20000)
     public void scheduleFetchDataBase() {
-        System.out.println("Integrando o banco de dados...");
+        String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/token";
+
+        MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>();
+        parts.add("username", "administrador.crm@grupobrasanitas.com.br");
+        parts.add("password", "Br@s@2014");
+        parts.add("grant_type", "password");
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        System.out.println("Begin /POST request!");
+        // replace http://localhost:8080 by your restful services
+
+        String tokeObj = restTemplate.postForObject(url, parts, String.class);
+        System.out.println(tokeObj);
     }
 
 }
