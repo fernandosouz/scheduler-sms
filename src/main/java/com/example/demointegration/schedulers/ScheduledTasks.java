@@ -1,7 +1,9 @@
 package com.example.demointegration.schedulers;
 
 import com.example.demointegration.model.DataIntegration;
+import com.example.demointegration.model.TokenResponse;
 import com.example.demointegration.repository.DataIntegrationRepository;
+import com.example.demointegration.repository.TokenResponseRepository;
 import org.slf4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +38,15 @@ import java.util.concurrent.TimeUnit;
 public class ScheduledTasks {
 
     private final DataIntegrationRepository dataIntegrationDAO;
+    private final TokenResponseRepository tokenResponseDAO;
     /*private final TokenResponseRepository tokenRepositoryDAO;*/
     private final Integer n = 2000;
 
     @Autowired
-    public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO){
+    public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO,
+                          TokenResponseRepository tokenResponseRepository){
         this.dataIntegrationDAO = dataIntegrationDAO;
+        this.tokenResponseDAO = tokenResponseRepository;
     }
 
     /*@Scheduled(fixedDelayString = "${connector.delay}")
@@ -79,8 +84,9 @@ public class ScheduledTasks {
         System.out.println("Begin /POST request!");
         // replace http://localhost:8080 by your restful services
 
-        String tokeObj = restTemplate.postForObject(url, parts, String.class);
-        System.out.println(tokeObj);
+        TokenResponse tokenObj = restTemplate.postForObject(url, parts, TokenResponse.class);
+        System.out.println(tokenObj);
+        tokenResponseDAO.save(tokenObj);
     }
 
 }
