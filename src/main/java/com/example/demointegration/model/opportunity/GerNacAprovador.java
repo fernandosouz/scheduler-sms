@@ -2,10 +2,9 @@ package com.example.demointegration.model.opportunity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.awt.*;
 import java.util.ArrayList;
 
-public class CriadoPor {
+public class GerNacAprovador {
 
     @JsonProperty("Id")
     private String Id;
@@ -22,9 +21,9 @@ public class CriadoPor {
     @JsonProperty("RowVersion")
     private Number RowVersion;
 
-    public CriadoPor(){};
+    public GerNacAprovador(){};
 
-    public CriadoPor(String id, String logicalName, String name, ArrayList keyAttributes, Number rowVersion) {
+    public GerNacAprovador(String id, String logicalName, String name, ArrayList keyAttributes, Number rowVersion) {
         Id = id;
         LogicalName = logicalName;
         Name = name;

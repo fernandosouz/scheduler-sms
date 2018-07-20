@@ -2,14 +2,14 @@ package com.example.demointegration.model.opportunity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ValorEstimaProposta {
+public class GerNacStatus {
 
     @JsonProperty("Value")
     private Number Value;
 
-    public ValorEstimaProposta(){};
+    public GerNacStatus(){};
 
-    public ValorEstimaProposta(Number value) {
+    public GerNacStatus(Number value) {
         Value = value;
     }
 

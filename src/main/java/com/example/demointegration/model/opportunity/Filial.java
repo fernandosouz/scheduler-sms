@@ -1,15 +1,28 @@
 package com.example.demointegration.model.opportunity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Filial {
 
+    @JsonProperty("Id")
     private String Id;
+
+    @JsonProperty("LogicalName")
     private String LogicalName;
+
+    @JsonProperty("Name")
     private String Name;
+
+    @JsonProperty("KeyAttributes")
     private ArrayList KeyAttributes;
+
+    @JsonProperty("RowVersion")
     private Number RowVersion;
+
+    public Filial(){};
 
     public Filial(String id, String logicalName, String name, ArrayList keyAttributes, Number rowVersion) {
         Id = id;

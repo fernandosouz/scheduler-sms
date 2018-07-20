@@ -1,8 +1,13 @@
 package com.example.demointegration.model.opportunity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Status {
 
+    @JsonProperty("Value")
     private Number Value;
+
+    public Status(){};
 
     public Status(Number value) {
         Value = value;

@@ -1,8 +1,13 @@
 package com.example.demointegration.model.opportunity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ReceitaReal {
 
+    @JsonProperty("Value")
     private Number Value;
+
+    public ReceitaReal(){};
 
     public ReceitaReal(Number value) {
         Value = value;

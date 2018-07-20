@@ -2,9 +2,9 @@ package com.example.demointegration.schedulers;
 
 import com.example.demointegration.endpoint.OpportunityResource;
 import com.example.demointegration.model.DataIntegration;
-import com.example.demointegration.model.client.OpportunityClient;
 import com.example.demointegration.model.opportunity.Opportunity;
 import com.example.demointegration.repository.DataIntegrationRepository;
+import com.example.demointegration.repository.OpportunityRepository;
 import com.example.demointegration.repository.TokenResponseRepository;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -36,14 +36,17 @@ public class ScheduledTasks {
 
     private final DataIntegrationRepository dataIntegrationDAO;
     private final TokenResponseRepository tokenResponseDAO;
+    private final OpportunityRepository opportunityDAO;
     /*private final TokenResponseRepository tokenRepositoryDAO;*/
     private final Integer n = 2000;
 
     @Autowired
     public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO,
-                          TokenResponseRepository tokenResponseRepository){
+                          TokenResponseRepository tokenResponseRepository,
+                          OpportunityRepository opportunityRepository){
         this.dataIntegrationDAO = dataIntegrationDAO;
         this.tokenResponseDAO = tokenResponseRepository;
+        this.opportunityDAO = opportunityRepository;
     }
 
     /*@Scheduled(fixedDelayString = "${connector.delay}")
@@ -93,40 +96,21 @@ public class ScheduledTasks {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer CVz9_kPmiLUTV-mK-bxeRebHIp1fg1xwT2NpSr_BWXiX41GUdPzmNcoZ5dFdTHgy7z9noHWrfkyl6XA0i_yComct7ICDr8DHwflyTYzCZX266l7edc3-IgAIvaNio6wtWOYFMRyX83Kn7v6p5c--OE6P37cVoW7cxDF88f_H2_T__wArGUZZrCQjf-jtbFOn37krxOVfSixBSKE9dP_gX6Hy2niZf_wog_Qtc3Q7JEIvbuP2MkjrBuxXqGjaxMLm3mvlNxdZlGuW8pnPTttglpof_Y313iQgiRSo3DpTcc-5FCTqMis-mScI9kQSdYvl");
+        headers.set("Authorization", "Bearer KaD3XKhxoD69adP5CqA-tSAHkXQXldyhsI7vHaTl60GF_a4tzwr0o89aTSeIH4LYTv5a_6jk8ezIAcMqSbmrcsOQRn13t1qgLcvTsNojaSdJEHV_tNxZEXSaVN3raCPTSvrWKeIqiXElQjx79jVj86RrPq6_UOcBQIn9Sd0GOrw1-9UO4776Na_2dC1Gq7sANdtraV-FXCoBVXOdgLOtolOqElAaYq1NRwp-qSIZR5I6wUKuXRxQ1OFTIzYmOhjckjtVWiiIWsnb8ACItA1b6WGRSJ3rf0l_VBWbzoGesOLTRvW_Yu93BnwTN2uCFS6G");
         headers.set("Content-Type","application/json");
 
         System.out.println("Send");
 
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-        /*ArrayList<ResponseEntity<Opportunity>> response = restTemplate.exchange(url2, HttpMethod.GET, entity, new ArrayList<ResponseEntity<Opportunity>>);*/
-
-        /*ResponseEntity<Object[]> responseEntity = restTemplate.exchange(url2, HttpMethod.GET, entity, Object[].class);*/
-        /*ResponseEntity<Opportunity[]> responseEntity = restTemplate.getForEntity(url2, Opportunity[].class);*/
 
         ResponseEntity < List <Opportunity>> response = restTemplate.exchange(url2,
                 HttpMethod.GET, entity, new ParameterizedTypeReference < List < Opportunity >> () {});
 
         List < Opportunity > list = response.getBody();
 
-
-
-
-
-        /*Não retorna*/
-       /* OpportunityClient opClient = Feign.builder()
-                .client(new OkHttpClient())
-                .encoder(new GsonEncoder())
-                .decoder(new GsonDecoder())
-                .logger(new Slf4jLogger(OpportunityClient.class))
-                .logLevel(Logger.Level.FULL)
-                .target(OpportunityClient.class, "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/Oportunidade/RecuperarOportunidades");
-
-
-        List<OpportunityResource> list = opClient.findAll();
-
-        list.forEach(o -> System.out.println(o.getOpportunity().getOportunidadeId()) );*/
-
+        list.forEach(o -> {
+            opportunityDAO.save(o);
+        });
     }
 
 }
