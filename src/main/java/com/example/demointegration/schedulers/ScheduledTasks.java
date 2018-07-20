@@ -109,6 +109,31 @@ public class ScheduledTasks {
         List < Opportunity > list = response.getBody();
 
         list.forEach(o -> {
+            /*Setar propriedades que estão dentro dos objetos*/
+            o.setTipoServicoId(o.getTipoServicoId());
+            o.setTipoServicoName(o.getTipoServicoName());
+            o.setProprietarioId(o.getProprietarioId());
+            o.setProprietarioName(o.getProprietarioName());
+            o.setContaId(o.getContaId());
+            o.setContaName(o.getContaName());
+            o.setUnidadeNegocioId(o.getUnidadeNegocioId());
+            o.setUnidadeNegocioName(o.getUnidadeNegocioName());
+            o.setFilialId(o.getFilialId());
+            o.setFilialName(o.getFilialName());
+            o.setGerNacAprovadorId(o.getGerNacAprovadorId());
+            o.setGerNacAprovadorName(o.getGerNacAprovadorName());
+            o.setOsId(o.getOsId());
+            o.setOsName(o.getOsName());
+            o.setCriadoPorId(o.getCriadoPorId());
+            o.setCriadoPorName(o.getCriadoPorName());
+            o.setAlteradoPorId(o.getAlteradoPorId());
+            o.setAlteradoPorName(o.getAlteradoPorName());
+            o.setValorEstimaPropostaValue(o.getValorEstimaPropostaValue());
+            o.setReceitaRealValue(o.getReceitaRealValue());
+            o.setGerNacStatusValue(o.getGerNacStatusValue());
+            o.setStatusValue(o.getStatusValue());
+            o.setRazaoStatusValue(o.getRazaoStatusValue());
+
             opportunityDAO.save(o);
         });
     }

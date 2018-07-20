@@ -3,14 +3,15 @@ package com.example.demointegration.model.opportunity;
 import com.example.demointegration.model.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 
 @Entity
-public class Opportunity extends AbstractEntity{
+public class Opportunity implements Serializable{
+
 
     @Transient
     @JsonProperty("TipoServico")
@@ -66,8 +67,13 @@ public class Opportunity extends AbstractEntity{
 
     @Transient
     @JsonProperty("AlteradoPor")
-    private Status AlteradoPor;
+    private AlteradoPor AlteradoPor;
 
+
+
+    /*Strings*/
+
+    @Id
     @Column
     @JsonProperty("OportunidadeId")
     private String OportunidadeId;
@@ -176,9 +182,103 @@ public class Opportunity extends AbstractEntity{
     @JsonProperty("DataAlteracao")
     private String DataAlteracao;
 
-    Opportunity(){};
+    /*Id and Name*/
 
-    public Opportunity(com.example.demointegration.model.opportunity.TipoServico tipoServico, com.example.demointegration.model.opportunity.ValorEstimaProposta valorEstimaProposta, com.example.demointegration.model.opportunity.Proprietario proprietario, com.example.demointegration.model.opportunity.ReceitaReal receitaReal, com.example.demointegration.model.opportunity.Conta conta, com.example.demointegration.model.opportunity.UnidadeNegocio unidadeNegocio, com.example.demointegration.model.opportunity.Filial filial, com.example.demointegration.model.opportunity.GerNacStatus gerNacStatus, com.example.demointegration.model.opportunity.GerNacAprovador gerNacAprovador, com.example.demointegration.model.opportunity.Os os, com.example.demointegration.model.opportunity.CriadoPor criadoPor, com.example.demointegration.model.opportunity.Status status, com.example.demointegration.model.opportunity.RazaoStatus razaoStatus, com.example.demointegration.model.opportunity.Status alteradoPor, String oportunidadeId, String topico, String clienteProvavel, String cnpj, String dataEstimadaFechamento, String probabilidade, String interesse, String fasePipeline, String dataCriacao, String numeroOportunidade, String numeroProposta, String margemBruta, String curvaUnidade, String tipoInstalacao, String facilities, String identificadoFornecedorAtual, String lqResultadoTexto, String lqPorqueBid, String lqCriterioBid, String lqOpiniao, String gerNacDescricao, String gerNacData, String dirStatus, String dirDescricao, String dirAprovador, String dirData, String dataAlteracao) {
+
+    @Column
+    @JsonProperty("TipoServicoId")
+    private String TipoServicoId;
+
+    @Column
+    @JsonProperty("TipoServicoName")
+    private String TipoServicoName;
+
+    @Column
+    @JsonProperty("ProprietarioId")
+    private String ProprietarioId;
+
+    @Column
+    @JsonProperty("ProprietarioName")
+    private String ProprietarioName;
+
+    @Column
+    @JsonProperty("ContaId")
+    private String ContaId;
+
+    @Column
+    @JsonProperty("ContaName")
+    private String ContaName;
+
+    @Column
+    @JsonProperty("UnidadeNegocioId")
+    private String UnidadeNegocioId;
+
+    @Column
+    @JsonProperty("UnidadeNegocioName")
+    private String UnidadeNegocioName;
+
+    @Column
+    @JsonProperty("FilialId")
+    private String FilialId;
+
+    @Column
+    @JsonProperty("FilialName")
+    private String FilialName;
+
+    @Column
+    @JsonProperty("GerNacAprovadorId")
+    private String GerNacAprovadorId;
+
+    @Column
+    @JsonProperty("GerNacAprovadorName")
+    private String GerNacAprovadorName;
+
+    @Column
+    @JsonProperty("OsId")
+    private String OsId;
+
+    @Column
+    @JsonProperty("OsName")
+    private String OsName;
+
+    @Column
+    @JsonProperty("CriadoPorId")
+    private String CriadoPorId;
+
+    @Column
+    @JsonProperty("CriadoPorName")
+    private String CriadoPorName;
+
+    @Column
+    @JsonProperty("AlteradoPorId")
+    private String AlteradoPorId;
+
+    @Column
+    @JsonProperty("AlteradoPorName")
+    private String AlteradoPorName;
+
+    /*Value*/
+    @Column
+    @JsonProperty("ValorEstimaPropostaValue")
+    private Number ValorEstimaPropostaValue;
+
+    @Column
+    @JsonProperty("ReceitaRealValue")
+    private Number ReceitaRealValue;
+
+    @Column
+    @JsonProperty("GerNacStatusValue")
+    private Number GerNacStatusValue;
+
+    @Column
+    @JsonProperty("StatusValue")
+    private Number StatusValue;
+
+    @Column
+    @JsonProperty("RazaoStatusValue")
+    private Number RazaoStatusValue;
+
+    public Opportunity(com.example.demointegration.model.opportunity.TipoServico tipoServico, com.example.demointegration.model.opportunity.ValorEstimaProposta valorEstimaProposta, com.example.demointegration.model.opportunity.Proprietario proprietario, com.example.demointegration.model.opportunity.ReceitaReal receitaReal, com.example.demointegration.model.opportunity.Conta conta, com.example.demointegration.model.opportunity.UnidadeNegocio unidadeNegocio, com.example.demointegration.model.opportunity.Filial filial, com.example.demointegration.model.opportunity.GerNacStatus gerNacStatus, com.example.demointegration.model.opportunity.GerNacAprovador gerNacAprovador, com.example.demointegration.model.opportunity.Os os, com.example.demointegration.model.opportunity.CriadoPor criadoPor, com.example.demointegration.model.opportunity.Status status, com.example.demointegration.model.opportunity.RazaoStatus razaoStatus, com.example.demointegration.model.opportunity.AlteradoPor alteradoPor, String oportunidadeId, String topico, String clienteProvavel, String cnpj, String dataEstimadaFechamento, String probabilidade, String interesse, String fasePipeline, String dataCriacao, String numeroOportunidade, String numeroProposta, String margemBruta, String curvaUnidade, String tipoInstalacao, String facilities, String identificadoFornecedorAtual, String lqResultadoTexto, String lqPorqueBid, String lqCriterioBid, String lqOpiniao, String gerNacDescricao, String gerNacData, String dirStatus, String dirDescricao, String dirAprovador, String dirData, String dataAlteracao, String tipoServicoId, String tipoServicoName, String proprietarioId, String proprietarioName, String contaId, String contaName, String unidadeNegocioId, String unidadeNegocioName, String filialId, String filialName, String gerNacAprovadorId, String gerNacAprovadorName, String osId, String osName, String criadoPorId, String criadoPorName, String alteradoPorId, String alteradoPorName, Number valorEstimaPropostaValue, Number receitaRealValue, Number gerNacStatusValue, Number statusValue, Number razaoStatusValue) {
         TipoServico = tipoServico;
         ValorEstimaProposta = valorEstimaProposta;
         Proprietario = proprietario;
@@ -220,7 +320,32 @@ public class Opportunity extends AbstractEntity{
         DirAprovador = dirAprovador;
         DirData = dirData;
         DataAlteracao = dataAlteracao;
+        TipoServicoId = tipoServicoId;
+        TipoServicoName = tipoServicoName;
+        ProprietarioId = proprietarioId;
+        ProprietarioName = proprietarioName;
+        ContaId = contaId;
+        ContaName = contaName;
+        UnidadeNegocioId = unidadeNegocioId;
+        UnidadeNegocioName = unidadeNegocioName;
+        FilialId = filialId;
+        FilialName = filialName;
+        GerNacAprovadorId = gerNacAprovadorId;
+        GerNacAprovadorName = gerNacAprovadorName;
+        OsId = osId;
+        OsName = osName;
+        CriadoPorId = criadoPorId;
+        CriadoPorName = criadoPorName;
+        AlteradoPorId = alteradoPorId;
+        AlteradoPorName = alteradoPorName;
+        ValorEstimaPropostaValue = valorEstimaPropostaValue;
+        ReceitaRealValue = receitaRealValue;
+        GerNacStatusValue = gerNacStatusValue;
+        StatusValue = statusValue;
+        RazaoStatusValue = razaoStatusValue;
     }
+
+    public Opportunity(){};
 
 
     public com.example.demointegration.model.opportunity.TipoServico getTipoServico() {
@@ -327,11 +452,11 @@ public class Opportunity extends AbstractEntity{
         RazaoStatus = razaoStatus;
     }
 
-    public com.example.demointegration.model.opportunity.Status getAlteradoPor() {
+    public com.example.demointegration.model.opportunity.AlteradoPor getAlteradoPor() {
         return AlteradoPor;
     }
 
-    public void setAlteradoPor(com.example.demointegration.model.opportunity.Status alteradoPor) {
+    public void setAlteradoPor(com.example.demointegration.model.opportunity.AlteradoPor alteradoPor) {
         AlteradoPor = alteradoPor;
     }
 
@@ -550,4 +675,208 @@ public class Opportunity extends AbstractEntity{
     public void setDataAlteracao(String dataAlteracao) {
         DataAlteracao = dataAlteracao;
     }
+
+
+    /*Inside Properties*/
+
+
+    public String getTipoServicoId() {
+        return TipoServico.getId();
+    }
+
+    public void setTipoServicoId(String tipoServicoId) {
+        TipoServicoId = tipoServicoId;
+    }
+
+    public String getTipoServicoName() {
+        return TipoServico.getName();
+    }
+
+    public void setTipoServicoName(String tipoServicoName) {
+        TipoServicoName = tipoServicoName;
+    }
+
+    public String getProprietarioId() {
+        return Proprietario.getId();
+    }
+
+    public void setProprietarioId(String proprietarioId) {
+        ProprietarioId = proprietarioId;
+    }
+
+    public String getProprietarioName() {
+        return Proprietario.getName();
+    }
+
+    public void setProprietarioName(String proprietarioName) {
+        ProprietarioName = proprietarioName;
+    }
+
+    public String getContaId() {
+        return Conta.getId();
+    }
+
+    public void setContaId(String contaId) {
+        ContaId = contaId;
+    }
+
+    public String getContaName() {
+        return Conta.getName();
+    }
+
+    public void setContaName(String contaName) {
+        ContaName = contaName;
+    }
+
+    public String getUnidadeNegocioId() {
+        return UnidadeNegocio.getId();
+    }
+
+    public void setUnidadeNegocioId(String unidadeNegocioId) {
+        UnidadeNegocioId = unidadeNegocioId;
+    }
+
+    public String getUnidadeNegocioName() {
+        return UnidadeNegocio.getName();
+    }
+
+    public void setUnidadeNegocioName(String unidadeNegocioName) {
+        UnidadeNegocioName = unidadeNegocioName;
+    }
+
+    public String getFilialId() {
+        return Filial.getId();
+    }
+
+    public void setFilialId(String filialId) {
+        FilialId = filialId;
+    }
+
+    public String getFilialName() {
+        return Filial.getName();
+    }
+
+    public void setFilialName(String filialName) {
+        FilialName = filialName;
+    }
+
+    public String getGerNacAprovadorId() {
+        return GerNacAprovador.getId();
+    }
+
+    public void setGerNacAprovadorId(String gerNacAprovadorId) {
+        GerNacAprovadorId = gerNacAprovadorId;
+    }
+
+    public String getGerNacAprovadorName() {
+        return GerNacAprovador.getName();
+    }
+
+    public void setGerNacAprovadorName(String gerNacAprovadorName) {
+        GerNacAprovadorName = gerNacAprovadorName;
+    }
+
+    public String getOsId() {
+        return Os.getId();
+    }
+
+    public void setOsId(String osId) {
+        OsId = osId;
+    }
+
+    public String getOsName() {
+        return Os.getName();
+    }
+
+    public void setOsName(String osName) {
+        OsName = osName;
+    }
+
+    public String getCriadoPorId() {
+        return CriadoPor.getId();
+    }
+
+    public void setCriadoPorId(String criadoPorId) {
+        CriadoPorId = criadoPorId;
+    }
+
+    public String getCriadoPorName() {
+        return CriadoPor.getName();
+    }
+
+    public void setCriadoPorName(String criadoPorName) {
+        CriadoPorName = criadoPorName;
+    }
+
+    public String getAlteradoPorId() {
+        return AlteradoPor.getId();
+    }
+
+    public void setAlteradoPorId(String alteradoPorId) {
+        AlteradoPorId = alteradoPorId;
+    }
+
+    public String getAlteradoPorName() {
+        return AlteradoPor.getName();
+    }
+
+    public void setAlteradoPorName(String alteradoPorName) {
+        AlteradoPorName = alteradoPorName;
+    }
+
+    public Number getValorEstimaPropostaValue() {
+        return ValorEstimaProposta.getValue();
+    }
+
+    public void setValorEstimaPropostaValue(Number valorEstimaPropostaValue) {
+        ValorEstimaPropostaValue = valorEstimaPropostaValue;
+    }
+
+    public Number getReceitaRealValue() {
+        return ReceitaReal.getValue();
+    }
+
+    public void setReceitaRealValue(Number receitaRealValue) {
+        ReceitaRealValue = receitaRealValue;
+    }
+
+    public Number getGerNacStatusValue() {
+        return GerNacStatus.getValue();
+    }
+
+    public void setGerNacStatusValue(Number gerNacStatusValue) {
+        GerNacStatusValue = gerNacStatusValue;
+    }
+
+    public Number getStatusValue() {
+        return Status.getValue();
+    }
+
+    public void setStatusValue(Number statusValue) {
+        StatusValue = statusValue;
+    }
+
+    public Number getRazaoStatusValue() {
+        return RazaoStatus.getValue();
+    }
+
+    public void setRazaoStatusValue(Number razaoStatusValue) {
+        RazaoStatusValue = razaoStatusValue;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Opportunity that = (Opportunity) o;
+        return OportunidadeId == that.OportunidadeId;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(OportunidadeId);
+    }
+
 }
