@@ -1,12 +1,12 @@
 package com.example.demointegration.schedulers;
 import com.example.demointegration.model.TokenResponse;
+import com.example.demointegration.model.account.Account;
 import com.example.demointegration.model.opportunity.Opportunity;
+import com.example.demointegration.repository.AccountRepository;
 import com.example.demointegration.repository.DataIntegrationRepository;
 import com.example.demointegration.repository.OpportunityRepository;
 import com.example.demointegration.repository.TokenResponseRepository;
-import com.sun.xml.internal.bind.v2.TODO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;git
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
@@ -25,16 +25,20 @@ public class ScheduledTasks {
     private final DataIntegrationRepository dataIntegrationDAO;
     private final TokenResponseRepository tokenResponseDAO;
     private final OpportunityRepository opportunityDAO;
+    private final AccountRepository accountDAO;
     /*private final TokenResponseRepository tokenRepositoryDAO;*/
     private final Integer n = 2000;
 
     @Autowired
     public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO,
                           TokenResponseRepository tokenResponseRepository,
-                          OpportunityRepository opportunityRepository){
+                          OpportunityRepository opportunityRepository,
+                          AccountRepository accountRepository){
+
         this.dataIntegrationDAO = dataIntegrationDAO;
         this.tokenResponseDAO = tokenResponseRepository;
         this.opportunityDAO = opportunityRepository;
+        this.accountDAO = accountRepository;
     }
 
     @Autowired
@@ -66,7 +70,7 @@ public class ScheduledTasks {
         /*Variables*/
         RestTemplate restTemplate = new RestTemplate();
 
-        /*Body*/
+        /*Body Request*/
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>();
         parts.add("username", "administrador.crm@grupobrasanitas.com.br");
         parts.add("password", "Br@s@2014");
@@ -79,7 +83,7 @@ public class ScheduledTasks {
         tokenResponseDAO.save(tokenObj);
     }
 
-
+    /*oportunidade*/
     @Scheduled(fixedRateString = "${scheduler.opportunity}")
     public void scheduleFetchOpportunity() {
         /*Variables*/
@@ -101,11 +105,39 @@ public class ScheduledTasks {
                 HttpMethod.GET, entity, new ParameterizedTypeReference <List<Opportunity>> () {});
         List <Opportunity> list = response.getBody();
 
-
         /*Persist*/
         list.forEach(o -> {
             o.setProperties();
             opportunityDAO.save(o);
+        });
+    }
+
+
+    @Scheduled(fixedRateString = "${scheduler.account}")
+    public void scheduleFetchAccount() {
+        /*Variables*/
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        /*TODO Colocar paths no application properties*/
+        String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/Conta/RecuperarContas";
+        TokenResponse tk = tokenResponseDAO.findLastOne();
+
+        /*Headers Request*/
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + tk.getAccess_token());
+        headers.set("Content-Type","application/json");
+
+        /*Request*/
+        System.out.println("Begin /GET /Conta/RecuperarContas");
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity <List<Account>> response = restTemplate.exchange(url,
+                HttpMethod.GET, entity, new ParameterizedTypeReference <List<Account>> () {});
+        List <Account> list = response.getBody();
+
+        /*Persist*/
+        list.forEach(o -> {
+            o.setProperties();
+            accountDAO.save(o);
         });
     }
 
