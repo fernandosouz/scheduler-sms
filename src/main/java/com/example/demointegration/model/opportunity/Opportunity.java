@@ -864,7 +864,7 @@ public class Opportunity implements Serializable{
         RazaoStatusValue = razaoStatusValue;
     }
 
-
+    /*Overrides*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -877,6 +877,32 @@ public class Opportunity implements Serializable{
     public int hashCode() {
 
         return Objects.hash(OportunidadeId);
+    }
+
+    public void setProperties(){
+        this.setTipoServicoId(this.getTipoServicoId());
+        this.setTipoServicoName(this.getTipoServicoName());
+        this.setProprietarioId(this.getProprietarioId());
+        this.setProprietarioName(this.getProprietarioName());
+        this.setContaId(this.getContaId());
+        this.setContaName(this.getContaName());
+        this.setUnidadeNegocioId(this.getUnidadeNegocioId());
+        this.setUnidadeNegocioName(this.getUnidadeNegocioName());
+        this.setFilialId(this.getFilialId());
+        this.setFilialName(this.getFilialName());
+        this.setGerNacAprovadorId(this.getGerNacAprovadorId());
+        this.setGerNacAprovadorName(this.getGerNacAprovadorName());
+        this.setOsId(this.getOsId());
+        this.setOsName(this.getOsName());
+        this.setCriadoPorId(this.getCriadoPorId());
+        this.setCriadoPorName(this.getCriadoPorName());
+        this.setAlteradoPorId(this.getAlteradoPorId());
+        this.setAlteradoPorName(this.getAlteradoPorName());
+        this.setValorEstimaPropostaValue(this.getValorEstimaPropostaValue());
+        this.setReceitaRealValue(this.getReceitaRealValue());
+        this.setGerNacStatusValue(this.getGerNacStatusValue());
+        this.setStatusValue(this.getStatusValue());
+        this.setRazaoStatusValue(this.getRazaoStatusValue());
     }
 
 }

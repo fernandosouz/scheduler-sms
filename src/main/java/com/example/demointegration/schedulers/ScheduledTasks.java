@@ -1,31 +1,19 @@
 package com.example.demointegration.schedulers;
-
-import com.example.demointegration.endpoint.OpportunityResource;
-import com.example.demointegration.model.DataIntegration;
+import com.example.demointegration.model.TokenResponse;
 import com.example.demointegration.model.opportunity.Opportunity;
 import com.example.demointegration.repository.DataIntegrationRepository;
 import com.example.demointegration.repository.OpportunityRepository;
 import com.example.demointegration.repository.TokenResponseRepository;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import feign.Feign;
-import feign.Logger;
-import feign.gson.GsonDecoder;
-import feign.gson.GsonEncoder;
-import feign.okhttp.OkHttpClient;
-import feign.slf4j.Slf4jLogger;
-import jdk.nashorn.api.scripting.JSObject;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.assertj.core.util.Sets;
-import org.json.JSONObject;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -49,6 +37,9 @@ public class ScheduledTasks {
         this.opportunityDAO = opportunityRepository;
     }
 
+    @Autowired
+    private Environment env;
+
     /*@Scheduled(fixedDelayString = "${connector.delay}")
     public void scheduleListIntegration() {
         List<DataIntegration> lista;
@@ -70,70 +61,50 @@ public class ScheduledTasks {
     }*/
 
 
-    @Scheduled(fixedRate = 30000)
-    public void scheduleFetchDataBase() {
-       /* String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/token";
+    @Scheduled(fixedRateString = "${scheduler.token}")
+    public void scheduleUpdateToken() {
+        /*Variables*/
+        RestTemplate restTemplate = new RestTemplate();
 
+        /*Body*/
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>();
         parts.add("username", "administrador.crm@grupobrasanitas.com.br");
         parts.add("password", "Br@s@2014");
         parts.add("grant_type", "password");
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        System.out.println("Begin /POST request!");
-        // replace http://localhost:8080 by your restful services
-
-        TokenResponse tokenObj = restTemplate.postForObject(url, parts, TokenResponse.class);
+        /*Request*/
+        System.out.println("Begin /POST /token");
+        TokenResponse tokenObj = restTemplate.postForObject("http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/token", parts, TokenResponse.class);
         System.out.println(tokenObj);
-        tokenResponseDAO.save(tokenObj);*/
+        tokenResponseDAO.save(tokenObj);
+    }
 
 
-       /*Opportunity*/
-
+    @Scheduled(fixedRateString = "${scheduler.opportunity}")
+    public void scheduleFetchOpportunity() {
+        /*Variables*/
         RestTemplate restTemplate = new RestTemplate();
-        String url2 = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/Oportunidade/RecuperarOportunidades";
-
         HttpHeaders headers = new HttpHeaders();
+        /*TODO Colocar paths no application properties*/
+        String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/Oportunidade/RecuperarOportunidades";
+        TokenResponse tk = tokenResponseDAO.findLastOne();
+
+        /*Headers Request*/
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer KaD3XKhxoD69adP5CqA-tSAHkXQXldyhsI7vHaTl60GF_a4tzwr0o89aTSeIH4LYTv5a_6jk8ezIAcMqSbmrcsOQRn13t1qgLcvTsNojaSdJEHV_tNxZEXSaVN3raCPTSvrWKeIqiXElQjx79jVj86RrPq6_UOcBQIn9Sd0GOrw1-9UO4776Na_2dC1Gq7sANdtraV-FXCoBVXOdgLOtolOqElAaYq1NRwp-qSIZR5I6wUKuXRxQ1OFTIzYmOhjckjtVWiiIWsnb8ACItA1b6WGRSJ3rf0l_VBWbzoGesOLTRvW_Yu93BnwTN2uCFS6G");
+        headers.set("Authorization", "Bearer " + tk.getAccess_token());
         headers.set("Content-Type","application/json");
 
-        System.out.println("Send");
-
+        /*Request*/
+        System.out.println("Begin /GET /Oportunidade/RecuperarOportunidades");
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity <List<Opportunity>> response = restTemplate.exchange(url,
+                HttpMethod.GET, entity, new ParameterizedTypeReference <List<Opportunity>> () {});
+        List <Opportunity> list = response.getBody();
 
-        ResponseEntity < List <Opportunity>> response = restTemplate.exchange(url2,
-                HttpMethod.GET, entity, new ParameterizedTypeReference < List < Opportunity >> () {});
 
-        List < Opportunity > list = response.getBody();
-
+        /*Persist*/
         list.forEach(o -> {
-            /*Setar propriedades que estão dentro dos objetos*/
-            o.setTipoServicoId(o.getTipoServicoId());
-            o.setTipoServicoName(o.getTipoServicoName());
-            o.setProprietarioId(o.getProprietarioId());
-            o.setProprietarioName(o.getProprietarioName());
-            o.setContaId(o.getContaId());
-            o.setContaName(o.getContaName());
-            o.setUnidadeNegocioId(o.getUnidadeNegocioId());
-            o.setUnidadeNegocioName(o.getUnidadeNegocioName());
-            o.setFilialId(o.getFilialId());
-            o.setFilialName(o.getFilialName());
-            o.setGerNacAprovadorId(o.getGerNacAprovadorId());
-            o.setGerNacAprovadorName(o.getGerNacAprovadorName());
-            o.setOsId(o.getOsId());
-            o.setOsName(o.getOsName());
-            o.setCriadoPorId(o.getCriadoPorId());
-            o.setCriadoPorName(o.getCriadoPorName());
-            o.setAlteradoPorId(o.getAlteradoPorId());
-            o.setAlteradoPorName(o.getAlteradoPorName());
-            o.setValorEstimaPropostaValue(o.getValorEstimaPropostaValue());
-            o.setReceitaRealValue(o.getReceitaRealValue());
-            o.setGerNacStatusValue(o.getGerNacStatusValue());
-            o.setStatusValue(o.getStatusValue());
-            o.setRazaoStatusValue(o.getRazaoStatusValue());
-
+            o.setProperties();
             opportunityDAO.save(o);
         });
     }
