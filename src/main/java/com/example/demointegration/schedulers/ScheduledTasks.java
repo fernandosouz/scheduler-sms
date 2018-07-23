@@ -1,14 +1,12 @@
 package com.example.demointegration.schedulers;
+import com.example.demointegration.model.DataIntegration;
 import com.example.demointegration.model.TokenResponse;
 import com.example.demointegration.model.account.Account;
 import com.example.demointegration.model.opportunity.Opportunity;
-import com.example.demointegration.repository.AccountRepository;
-import com.example.demointegration.repository.DataIntegrationRepository;
-import com.example.demointegration.repository.OpportunityRepository;
-import com.example.demointegration.repository.TokenResponseRepository;
-import org.springframework.beans.factory.annotation.Autowired;git
+import com.example.demointegration.model.unity.Unity;
+import com.example.demointegration.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -26,25 +24,23 @@ public class ScheduledTasks {
     private final TokenResponseRepository tokenResponseDAO;
     private final OpportunityRepository opportunityDAO;
     private final AccountRepository accountDAO;
-    /*private final TokenResponseRepository tokenRepositoryDAO;*/
-    private final Integer n = 2000;
+    private final UnityRepository unityDAO;
 
     @Autowired
     public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO,
                           TokenResponseRepository tokenResponseRepository,
                           OpportunityRepository opportunityRepository,
-                          AccountRepository accountRepository){
+                          AccountRepository accountRepository,
+                          UnityRepository unityRepository){
 
         this.dataIntegrationDAO = dataIntegrationDAO;
         this.tokenResponseDAO = tokenResponseRepository;
         this.opportunityDAO = opportunityRepository;
         this.accountDAO = accountRepository;
+        this.unityDAO = unityRepository;
     }
 
-    @Autowired
-    private Environment env;
-
-    /*@Scheduled(fixedDelayString = "${connector.delay}")
+   /* @Scheduled(fixedDelayString = "${connector.delay}")
     public void scheduleListIntegration() {
         List<DataIntegration> lista;
 
@@ -105,11 +101,17 @@ public class ScheduledTasks {
                 HttpMethod.GET, entity, new ParameterizedTypeReference <List<Opportunity>> () {});
         List <Opportunity> list = response.getBody();
 
-        /*Persist*/
-        list.forEach(o -> {
-            o.setProperties();
-            opportunityDAO.save(o);
-        });
+        System.out.println("Status Request: " + response.getStatusCode());
+        if(response.getStatusCode().toString() != "200"){
+            if(list != null) {
+                list.forEach(o -> {
+                    o.setProperties();
+                    opportunityDAO.save(o);
+                });
+            }
+        }else{
+
+        }
     }
 
 
@@ -134,11 +136,53 @@ public class ScheduledTasks {
                 HttpMethod.GET, entity, new ParameterizedTypeReference <List<Account>> () {});
         List <Account> list = response.getBody();
 
-        /*Persist*/
-        list.forEach(o -> {
-            o.setProperties();
-            accountDAO.save(o);
-        });
+        System.out.println("Status Request: " + response.getStatusCode());
+        if(response.getStatusCode().toString() != "200"){
+            if(list != null) {
+                list.forEach(o -> {
+                    o.setProperties();
+                    accountDAO.save(o);
+                });
+            }
+        }else{
+
+        }
+    }
+
+
+    @Scheduled(fixedRateString = "${scheduler.unity}")
+    public void scheduleFetchUnity() {
+        /*Variables*/
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        /*TODO Colocar paths no application properties*/
+        String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/UnidadeBrasanita/RecuperarUnidadesBrasanitas";
+        TokenResponse tk = tokenResponseDAO.findLastOne();
+
+        /*Headers Request*/
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + tk.getAccess_token());
+        headers.set("Content-Type","application/json");
+
+        /*Request*/
+        System.out.println("Begin /GET /UnidadeBrasanita/RecuperarUnidadesBrasanitas");
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity <List<Unity>> response = restTemplate.exchange(url,
+                HttpMethod.GET, entity, new ParameterizedTypeReference <List<Unity>> () {});
+        List <Unity> list = response.getBody();
+
+        System.out.println("Status Request: " + response.getStatusCode());
+        if(response.getStatusCode().toString() != "200"){
+            if(list != null) {
+                list.forEach(o -> {
+                    o.setProperties();
+                    unityDAO.save(o);
+                });
+            }
+        }else{
+
+        }
+
     }
 
 }

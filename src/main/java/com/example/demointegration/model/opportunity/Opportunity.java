@@ -745,7 +745,7 @@ public class Opportunity implements Serializable{
     }
 
     public String getFilialId() {
-        return Filial.getId();
+        return Filial != null ? Filial.getId() : "";
     }
 
     public void setFilialId(String filialId) {
@@ -753,7 +753,7 @@ public class Opportunity implements Serializable{
     }
 
     public String getFilialName() {
-        return Filial.getName();
+        return Filial != null ? Filial.getName() : "";
     }
 
     public void setFilialName(String filialName) {
@@ -761,7 +761,7 @@ public class Opportunity implements Serializable{
     }
 
     public String getGerNacAprovadorId() {
-        return GerNacAprovador.getId();
+        return GerNacAprovador != null? GerNacAprovador.getId() : "";
     }
 
     public void setGerNacAprovadorId(String gerNacAprovadorId) {
@@ -769,7 +769,7 @@ public class Opportunity implements Serializable{
     }
 
     public String getGerNacAprovadorName() {
-        return GerNacAprovador.getName();
+        return GerNacAprovador != null? GerNacAprovador.getName() : "";
     }
 
     public void setGerNacAprovadorName(String gerNacAprovadorName) {
@@ -777,7 +777,7 @@ public class Opportunity implements Serializable{
     }
 
     public String getOsId() {
-        return Os.getId();
+        return Os != null ? Os.getId() : "";
     }
 
     public void setOsId(String osId) {
@@ -785,7 +785,7 @@ public class Opportunity implements Serializable{
     }
 
     public String getOsName() {
-        return Os.getName();
+        return Os != null ? Os.getName() : "";
     }
 
     public void setOsName(String osName) {
@@ -825,7 +825,7 @@ public class Opportunity implements Serializable{
     }
 
     public Number getValorEstimaPropostaValue() {
-        return ValorEstimaProposta.getValue();
+        return ValorEstimaProposta != null ? ValorEstimaProposta.getValue() : 0;
     }
 
     public void setValorEstimaPropostaValue(Number valorEstimaPropostaValue) {
@@ -833,7 +833,7 @@ public class Opportunity implements Serializable{
     }
 
     public Number getReceitaRealValue() {
-        return ReceitaReal.getValue();
+        return ReceitaReal != null ? ReceitaReal.getValue() : 0;
     }
 
     public void setReceitaRealValue(Number receitaRealValue) {
@@ -841,7 +841,7 @@ public class Opportunity implements Serializable{
     }
 
     public Number getGerNacStatusValue() {
-        return GerNacStatus.getValue();
+        return GerNacStatus != null ? GerNacStatus.getValue() : 0;
     }
 
     public void setGerNacStatusValue(Number gerNacStatusValue) {
