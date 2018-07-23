@@ -1,4 +1,4 @@
-package com.example.demointegration.model;
+package com.example.demointegration.model.utils;
 
 import javax.persistence.*;
 import java.io.Serializable;

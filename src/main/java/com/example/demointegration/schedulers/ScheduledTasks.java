@@ -4,6 +4,7 @@ import com.example.demointegration.model.TokenResponse;
 import com.example.demointegration.model.account.Account;
 import com.example.demointegration.model.opportunity.Opportunity;
 import com.example.demointegration.model.unity.Unity;
+import com.example.demointegration.model.utils.DataLog;
 import com.example.demointegration.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,19 +26,22 @@ public class ScheduledTasks {
     private final OpportunityRepository opportunityDAO;
     private final AccountRepository accountDAO;
     private final UnityRepository unityDAO;
+    private final DataLogRepository datalogDAO;
 
     @Autowired
     public ScheduledTasks(DataIntegrationRepository dataIntegrationDAO,
                           TokenResponseRepository tokenResponseRepository,
                           OpportunityRepository opportunityRepository,
                           AccountRepository accountRepository,
-                          UnityRepository unityRepository){
+                          UnityRepository unityRepository,
+                          DataLogRepository dataLogRepository){
 
         this.dataIntegrationDAO = dataIntegrationDAO;
         this.tokenResponseDAO = tokenResponseRepository;
         this.opportunityDAO = opportunityRepository;
         this.accountDAO = accountRepository;
         this.unityDAO = unityRepository;
+        this.datalogDAO = dataLogRepository;
     }
 
    /* @Scheduled(fixedDelayString = "${connector.delay}")
@@ -97,9 +101,21 @@ public class ScheduledTasks {
         /*Request*/
         System.out.println("Begin /GET /Oportunidade/RecuperarOportunidades");
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+
+        System.out.println(restTemplate.exchange(url,
+                HttpMethod.GET, entity, new ParameterizedTypeReference <List<Opportunity>> () {}));
+
         ResponseEntity <List<Opportunity>> response = restTemplate.exchange(url,
                 HttpMethod.GET, entity, new ParameterizedTypeReference <List<Opportunity>> () {});
         List <Opportunity> list = response.getBody();
+
+
+        DataLog datalog = new DataLog(
+                "URL: " + url + " HEADERS: " + headers.toString() + " METHOD: " +HttpMethod.GET.toString(),
+                response.toString(),
+                "Opportunity");
+
+        datalogDAO.save(datalog);
 
         System.out.println("Status Request: " + response.getStatusCode());
         if(response.getStatusCode().toString() != "200"){
@@ -117,24 +133,30 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRateString = "${scheduler.account}")
     public void scheduleFetchAccount() {
-        /*Variables*/
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        /*TODO Colocar paths no application properties*/
+
         String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/Conta/RecuperarContas";
         TokenResponse tk = tokenResponseDAO.findLastOne();
 
-        /*Headers Request*/
+
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + tk.getAccess_token());
         headers.set("Content-Type","application/json");
 
-        /*Request*/
         System.out.println("Begin /GET /Conta/RecuperarContas");
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         ResponseEntity <List<Account>> response = restTemplate.exchange(url,
                 HttpMethod.GET, entity, new ParameterizedTypeReference <List<Account>> () {});
         List <Account> list = response.getBody();
+
+        DataLog datalog = new DataLog(
+                "URL: " + url + " HEADERS: " + headers.toString() + " METHOD: " +HttpMethod.GET.toString(),
+                response.toString(),
+                "Accountgit");
+
+        datalogDAO.save(datalog);
 
         System.out.println("Status Request: " + response.getStatusCode());
         if(response.getStatusCode().toString() != "200"){
@@ -152,24 +174,29 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRateString = "${scheduler.unity}")
     public void scheduleFetchUnity() {
-        /*Variables*/
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        /*TODO Colocar paths no application properties*/
+
         String url = "http://i4drouter.cloudapp.net/GrupoBrasanitas.Web.Api/api/UnidadeBrasanita/RecuperarUnidadesBrasanitas";
         TokenResponse tk = tokenResponseDAO.findLastOne();
 
-        /*Headers Request*/
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + tk.getAccess_token());
         headers.set("Content-Type","application/json");
 
-        /*Request*/
         System.out.println("Begin /GET /UnidadeBrasanita/RecuperarUnidadesBrasanitas");
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         ResponseEntity <List<Unity>> response = restTemplate.exchange(url,
                 HttpMethod.GET, entity, new ParameterizedTypeReference <List<Unity>> () {});
         List <Unity> list = response.getBody();
+
+        DataLog datalog = new DataLog(
+                "URL: " + url + " HEADERS: " + headers.toString() + " METHOD: " +HttpMethod.GET.toString(),
+                response.toString(),
+                "Unity");
+
+        datalogDAO.save(datalog);
 
         System.out.println("Status Request: " + response.getStatusCode());
         if(response.getStatusCode().toString() != "200"){

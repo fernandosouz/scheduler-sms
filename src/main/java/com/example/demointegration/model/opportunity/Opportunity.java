@@ -1,11 +1,9 @@
 package com.example.demointegration.model.opportunity;
 
-import com.example.demointegration.model.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
 
 

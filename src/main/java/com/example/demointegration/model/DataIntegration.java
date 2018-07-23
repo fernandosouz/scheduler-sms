@@ -1,5 +1,7 @@
 package com.example.demointegration.model;
 
+import com.example.demointegration.model.utils.AbstractEntity;
+
 import javax.persistence.Entity;
 
 
