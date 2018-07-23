@@ -1,5 +1,8 @@
 package com.example.demointegration.model.opportunity;
 
+import com.example.demointegration.model.utils.EntityReference;
+import com.example.demointegration.model.utils.Money;
+import com.example.demointegration.model.utils.OptionSetValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -10,64 +13,85 @@ import java.util.Objects;
 @Entity
 public class Opportunity implements Serializable{
 
+    @Transient
+    @JsonProperty("ClienteProvavel")
+    private EntityReference ClienteProvavel;
 
     @Transient
     @JsonProperty("TipoServico")
-    private TipoServico TipoServico;
+    private EntityReference TipoServico;
 
     @Transient
     @JsonProperty("ValorEstimaProposta")
-    private ValorEstimaProposta ValorEstimaProposta;
+    private Money ValorEstimaProposta;
+
+    @Transient
+    @JsonProperty("Interesse")
+    private OptionSetValue Interesse;
 
     @Transient
     @JsonProperty("Proprietario")
-    private Proprietario Proprietario;
+    private EntityReference Proprietario;
 
     @Transient
     @JsonProperty("ReceitaReal")
-    private ReceitaReal ReceitaReal;
+    private Money ReceitaReal;
+
+    @Transient
+    @JsonProperty("CurvaUnidade")
+    private OptionSetValue CurvaUnidade;
 
     @Transient
     @JsonProperty("Conta")
-    private Conta Conta;
+    private EntityReference Conta;
 
     @Transient
     @JsonProperty("UnidadeNegocio")
-    private UnidadeNegocio UnidadeNegocio;
+    private EntityReference UnidadeNegocio;
+
+    @Transient
+    @JsonProperty("Facilities")
+    private OptionSetValue Facilities;
 
     @Transient
     @JsonProperty("Filial")
-    private Filial Filial;
+    private EntityReference Filial;
 
     @Transient
     @JsonProperty("GerNacStatus")
-    private GerNacStatus GerNacStatus;
+    private OptionSetValue GerNacStatus;
 
     @Transient
     @JsonProperty("GerNacAprovador")
-    private GerNacAprovador GerNacAprovador;
+    private EntityReference GerNacAprovador;
+
+    @Transient
+    @JsonProperty("DirStatus")
+    private OptionSetValue DirStatus;
+
+    @Transient
+    @JsonProperty("DirAprovador")
+    private EntityReference DirAprovador;
 
     @Transient
     @JsonProperty("Os")
-    private Os Os;
+    private EntityReference Os;
 
     @Transient
     @JsonProperty("CriadoPor")
-    private CriadoPor CriadoPor;
+    private EntityReference CriadoPor;
 
     @Transient
     @JsonProperty("Status")
-    private Status Status;
+    private OptionSetValue Status;
 
     @Transient
     @JsonProperty("RazaoStatus")
-    private RazaoStatus RazaoStatus;
+    private OptionSetValue RazaoStatus;
 
     @Transient
     @JsonProperty("AlteradoPor")
-    private AlteradoPor AlteradoPor;
-
-
+    private EntityReference AlteradoPor;
 
     /*Strings*/
 
@@ -81,10 +105,6 @@ public class Opportunity implements Serializable{
     private String Topico;
 
     @Column
-    @JsonProperty("ClienteProvavel")
-    private String ClienteProvavel;
-
-    @Column
     @JsonProperty("Cnpj")
     private String Cnpj;
 
@@ -94,11 +114,7 @@ public class Opportunity implements Serializable{
 
     @Column
     @JsonProperty("Probabilidade")
-    private String Probabilidade;
-
-    @Column
-    @JsonProperty("Interesse")
-    private String Interesse;
+    private Number Probabilidade;
 
     @Column
     @JsonProperty("FasePipeline")
@@ -121,20 +137,12 @@ public class Opportunity implements Serializable{
     private String MargemBruta;
 
     @Column
-    @JsonProperty("CurvaUnidade")
-    private String CurvaUnidade;
-
-    @Column
     @JsonProperty("TipoInstalacao")
     private String TipoInstalacao;
 
     @Column
-    @JsonProperty("Facilities")
-    private String Facilities;
-
-    @Column
     @JsonProperty("IdentificadoFornecedorAtual")
-    private String IdentificadoFornecedorAtual;
+    private Boolean IdentificadoFornecedorAtual;
 
     @Column
     @JsonProperty("LqResultadoTexto")
@@ -161,16 +169,8 @@ public class Opportunity implements Serializable{
     private String GerNacData;
 
     @Column
-    @JsonProperty("DirStatus")
-    private String DirStatus;
-
-    @Column
     @JsonProperty("DirDescricao")
     private String DirDescricao;
-
-    @Column
-    @JsonProperty("DirAprovador")
-    private String DirAprovador;
 
     @Column
     @JsonProperty("DirData")
@@ -179,282 +179,298 @@ public class Opportunity implements Serializable{
     @Column
     @JsonProperty("DataAlteracao")
     private String DataAlteracao;
-
-    /*Id and Name*/
-
-
-    @Column
-    @JsonProperty("TipoServicoId")
-    private String TipoServicoId;
-
-    @Column
-    @JsonProperty("TipoServicoName")
-    private String TipoServicoName;
-
-    @Column
-    @JsonProperty("ProprietarioId")
-    private String ProprietarioId;
-
-    @Column
-    @JsonProperty("ProprietarioName")
-    private String ProprietarioName;
-
-    @Column
-    @JsonProperty("ContaId")
-    private String ContaId;
-
-    @Column
-    @JsonProperty("ContaName")
-    private String ContaName;
-
-    @Column
-    @JsonProperty("UnidadeNegocioId")
-    private String UnidadeNegocioId;
-
-    @Column
-    @JsonProperty("UnidadeNegocioName")
-    private String UnidadeNegocioName;
-
-    @Column
-    @JsonProperty("FilialId")
-    private String FilialId;
-
-    @Column
-    @JsonProperty("FilialName")
-    private String FilialName;
-
-    @Column
-    @JsonProperty("GerNacAprovadorId")
-    private String GerNacAprovadorId;
-
-    @Column
-    @JsonProperty("GerNacAprovadorName")
-    private String GerNacAprovadorName;
-
-    @Column
-    @JsonProperty("OsId")
-    private String OsId;
-
-    @Column
-    @JsonProperty("OsName")
-    private String OsName;
-
-    @Column
-    @JsonProperty("CriadoPorId")
-    private String CriadoPorId;
-
-    @Column
-    @JsonProperty("CriadoPorName")
-    private String CriadoPorName;
-
-    @Column
-    @JsonProperty("AlteradoPorId")
-    private String AlteradoPorId;
-
-    @Column
-    @JsonProperty("AlteradoPorName")
-    private String AlteradoPorName;
-
+    
     /*Value*/
+
     @Column
     @JsonProperty("ValorEstimaPropostaValue")
     private Number ValorEstimaPropostaValue;
+
+    @Column
+    @JsonProperty("InteresseValue")
+    private Number InteresseValue;
 
     @Column
     @JsonProperty("ReceitaRealValue")
     private Number ReceitaRealValue;
 
     @Column
+    @JsonProperty("CurvaUnidadeValue")
+    private Number CurvaUnidadeValue;
+
+    @Column
+    @JsonProperty("FacilitiesValue")
+    private Number FacilitiesValue;
+
+    @Column
     @JsonProperty("GerNacStatusValue")
     private Number GerNacStatusValue;
 
     @Column
+    @JsonProperty("DirStatusValue")
+    private Number DirStatusValue;
+
+    @Column
     @JsonProperty("StatusValue")
     private Number StatusValue;
-
+    
     @Column
     @JsonProperty("RazaoStatusValue")
     private Number RazaoStatusValue;
 
-    public Opportunity(com.example.demointegration.model.opportunity.TipoServico tipoServico, com.example.demointegration.model.opportunity.ValorEstimaProposta valorEstimaProposta, com.example.demointegration.model.opportunity.Proprietario proprietario, com.example.demointegration.model.opportunity.ReceitaReal receitaReal, com.example.demointegration.model.opportunity.Conta conta, com.example.demointegration.model.opportunity.UnidadeNegocio unidadeNegocio, com.example.demointegration.model.opportunity.Filial filial, com.example.demointegration.model.opportunity.GerNacStatus gerNacStatus, com.example.demointegration.model.opportunity.GerNacAprovador gerNacAprovador, com.example.demointegration.model.opportunity.Os os, com.example.demointegration.model.opportunity.CriadoPor criadoPor, com.example.demointegration.model.opportunity.Status status, com.example.demointegration.model.opportunity.RazaoStatus razaoStatus, com.example.demointegration.model.opportunity.AlteradoPor alteradoPor, String oportunidadeId, String topico, String clienteProvavel, String cnpj, String dataEstimadaFechamento, String probabilidade, String interesse, String fasePipeline, String dataCriacao, String numeroOportunidade, String numeroProposta, String margemBruta, String curvaUnidade, String tipoInstalacao, String facilities, String identificadoFornecedorAtual, String lqResultadoTexto, String lqPorqueBid, String lqCriterioBid, String lqOpiniao, String gerNacDescricao, String gerNacData, String dirStatus, String dirDescricao, String dirAprovador, String dirData, String dataAlteracao, String tipoServicoId, String tipoServicoName, String proprietarioId, String proprietarioName, String contaId, String contaName, String unidadeNegocioId, String unidadeNegocioName, String filialId, String filialName, String gerNacAprovadorId, String gerNacAprovadorName, String osId, String osName, String criadoPorId, String criadoPorName, String alteradoPorId, String alteradoPorName, Number valorEstimaPropostaValue, Number receitaRealValue, Number gerNacStatusValue, Number statusValue, Number razaoStatusValue) {
-        TipoServico = tipoServico;
-        ValorEstimaProposta = valorEstimaProposta;
-        Proprietario = proprietario;
-        ReceitaReal = receitaReal;
-        Conta = conta;
-        UnidadeNegocio = unidadeNegocio;
-        Filial = filial;
-        GerNacStatus = gerNacStatus;
-        GerNacAprovador = gerNacAprovador;
-        Os = os;
-        CriadoPor = criadoPor;
-        Status = status;
-        RazaoStatus = razaoStatus;
-        AlteradoPor = alteradoPor;
-        OportunidadeId = oportunidadeId;
-        Topico = topico;
-        ClienteProvavel = clienteProvavel;
-        Cnpj = cnpj;
-        DataEstimadaFechamento = dataEstimadaFechamento;
-        Probabilidade = probabilidade;
-        Interesse = interesse;
-        FasePipeline = fasePipeline;
-        DataCriacao = dataCriacao;
-        NumeroOportunidade = numeroOportunidade;
-        NumeroProposta = numeroProposta;
-        MargemBruta = margemBruta;
-        CurvaUnidade = curvaUnidade;
-        TipoInstalacao = tipoInstalacao;
-        Facilities = facilities;
-        IdentificadoFornecedorAtual = identificadoFornecedorAtual;
-        LqResultadoTexto = lqResultadoTexto;
-        LqPorqueBid = lqPorqueBid;
-        LqCriterioBid = lqCriterioBid;
-        LqOpiniao = lqOpiniao;
-        GerNacDescricao = gerNacDescricao;
-        GerNacData = gerNacData;
-        DirStatus = dirStatus;
-        DirDescricao = dirDescricao;
-        DirAprovador = dirAprovador;
-        DirData = dirData;
-        DataAlteracao = dataAlteracao;
-        TipoServicoId = tipoServicoId;
-        TipoServicoName = tipoServicoName;
-        ProprietarioId = proprietarioId;
-        ProprietarioName = proprietarioName;
-        ContaId = contaId;
-        ContaName = contaName;
-        UnidadeNegocioId = unidadeNegocioId;
-        UnidadeNegocioName = unidadeNegocioName;
-        FilialId = filialId;
-        FilialName = filialName;
-        GerNacAprovadorId = gerNacAprovadorId;
-        GerNacAprovadorName = gerNacAprovadorName;
-        OsId = osId;
-        OsName = osName;
-        CriadoPorId = criadoPorId;
-        CriadoPorName = criadoPorName;
-        AlteradoPorId = alteradoPorId;
-        AlteradoPorName = alteradoPorName;
-        ValorEstimaPropostaValue = valorEstimaPropostaValue;
-        ReceitaRealValue = receitaRealValue;
-        GerNacStatusValue = gerNacStatusValue;
-        StatusValue = statusValue;
-        RazaoStatusValue = razaoStatusValue;
-    }
+    /*Id */
+
+    @Column
+    @JsonProperty("ClienteProvavelId")
+    private String ClienteProvavelId;
+    
+    @Column
+    @JsonProperty("TipoServicoId")
+    private String TipoServicoId;
+    
+    @Column
+    @JsonProperty("ProprietarioId")
+    private String ProprietarioId;
+    
+    @Column
+    @JsonProperty("ContaId")
+    private String ContaId;
+    
+    @Column
+    @JsonProperty("UnidadeNegocioId")
+    private String UnidadeNegocioId;
+
+    @Column
+    @JsonProperty("FilialId")
+    private String FilialId;
+
+    @Column
+    @JsonProperty("GerNacAprovadorId")
+    private String GerNacAprovadorId;
+
+    @Column
+    @JsonProperty("DirAprovadorId")
+    private String DirAprovadorId;
+    
+    @Column
+    @JsonProperty("OsId")
+    private String OsId;
+    
+    @Column
+    @JsonProperty("CriadoPorId")
+    private String CriadoPorId;
+
+    @Column
+    @JsonProperty("AlteradoPorId")
+    private String AlteradoPorId;
+    
+    /*Name*/
+
+    @Column
+    @JsonProperty("ClienteProvavelName")
+    private String ClienteProvavelName;
+
+    @Column
+    @JsonProperty("TipoServicoName")
+    private String TipoServicoName;
+
+    @Column
+    @JsonProperty("ProprietarioName")
+    private String ProprietarioName;
+
+    @Column
+    @JsonProperty("ContaName")
+    private String ContaName;
+
+    @Column
+    @JsonProperty("UnidadeNegocioName")
+    private String UnidadeNegocioName;
+
+    @Column
+    @JsonProperty("FilialName")
+    private String FilialName;
+
+    @Column
+    @JsonProperty("GerNacAprovadorName")
+    private String GerNacAprovadorName;
+
+    @Column
+    @JsonProperty("DirAprovadorName")
+    private String DirAprovadorName;
+
+    @Column
+    @JsonProperty("OsName")
+    private String OsName;
+
+    @Column
+    @JsonProperty("CriadoPorName")
+    private String CriadoPorName;
+
+    @Column
+    @JsonProperty("AlteradoPorName")
+    private String AlteradoPorName;
+
+
 
     public Opportunity(){};
 
+    public EntityReference getClienteProvavel() {
+        return ClienteProvavel;
+    }
 
-    public com.example.demointegration.model.opportunity.TipoServico getTipoServico() {
+    public void setClienteProvavel(EntityReference clienteProvavel) {
+        ClienteProvavel = clienteProvavel;
+    }
+
+    public EntityReference getTipoServico() {
         return TipoServico;
     }
 
-    public void setTipoServico(com.example.demointegration.model.opportunity.TipoServico tipoServico) {
+    public void setTipoServico(EntityReference tipoServico) {
         TipoServico = tipoServico;
     }
 
-    public com.example.demointegration.model.opportunity.ValorEstimaProposta getValorEstimaProposta() {
+    public Money getValorEstimaProposta() {
         return ValorEstimaProposta;
     }
 
-    public void setValorEstimaProposta(com.example.demointegration.model.opportunity.ValorEstimaProposta valorEstimaProposta) {
+    public void setValorEstimaProposta(Money valorEstimaProposta) {
         ValorEstimaProposta = valorEstimaProposta;
     }
 
-    public com.example.demointegration.model.opportunity.Proprietario getProprietario() {
+    public OptionSetValue getInteresse() {
+        return Interesse;
+    }
+
+    public void setInteresse(OptionSetValue interesse) {
+        Interesse = interesse;
+    }
+
+    public EntityReference getProprietario() {
         return Proprietario;
     }
 
-    public void setProprietario(com.example.demointegration.model.opportunity.Proprietario proprietario) {
+    public void setProprietario(EntityReference proprietario) {
         Proprietario = proprietario;
     }
 
-    public com.example.demointegration.model.opportunity.ReceitaReal getReceitaReal() {
+    public Money getReceitaReal() {
         return ReceitaReal;
     }
 
-    public void setReceitaReal(com.example.demointegration.model.opportunity.ReceitaReal receitaReal) {
+    public void setReceitaReal(Money receitaReal) {
         ReceitaReal = receitaReal;
     }
 
-    public com.example.demointegration.model.opportunity.Conta getConta() {
+    public OptionSetValue getCurvaUnidade() {
+        return CurvaUnidade;
+    }
+
+    public void setCurvaUnidade(OptionSetValue curvaUnidade) {
+        CurvaUnidade = curvaUnidade;
+    }
+
+    public EntityReference getConta() {
         return Conta;
     }
 
-    public void setConta(com.example.demointegration.model.opportunity.Conta conta) {
+    public void setConta(EntityReference conta) {
         Conta = conta;
     }
 
-    public com.example.demointegration.model.opportunity.UnidadeNegocio getUnidadeNegocio() {
+    public EntityReference getUnidadeNegocio() {
         return UnidadeNegocio;
     }
 
-    public void setUnidadeNegocio(com.example.demointegration.model.opportunity.UnidadeNegocio unidadeNegocio) {
+    public void setUnidadeNegocio(EntityReference unidadeNegocio) {
         UnidadeNegocio = unidadeNegocio;
     }
 
-    public com.example.demointegration.model.opportunity.Filial getFilial() {
+    public OptionSetValue getFacilities() {
+        return Facilities;
+    }
+
+    public void setFacilities(OptionSetValue facilities) {
+        Facilities = facilities;
+    }
+
+    public EntityReference getFilial() {
         return Filial;
     }
 
-    public void setFilial(com.example.demointegration.model.opportunity.Filial filial) {
+    public void setFilial(EntityReference filial) {
         Filial = filial;
     }
 
-    public com.example.demointegration.model.opportunity.GerNacStatus getGerNacStatus() {
+    public OptionSetValue getGerNacStatus() {
         return GerNacStatus;
     }
 
-    public void setGerNacStatus(com.example.demointegration.model.opportunity.GerNacStatus gerNacStatus) {
+    public void setGerNacStatus(OptionSetValue gerNacStatus) {
         GerNacStatus = gerNacStatus;
     }
 
-    public com.example.demointegration.model.opportunity.GerNacAprovador getGerNacAprovador() {
+    public EntityReference getGerNacAprovador() {
         return GerNacAprovador;
     }
 
-    public void setGerNacAprovador(com.example.demointegration.model.opportunity.GerNacAprovador gerNacAprovador) {
+    public void setGerNacAprovador(EntityReference gerNacAprovador) {
         GerNacAprovador = gerNacAprovador;
     }
 
-    public com.example.demointegration.model.opportunity.Os getOs() {
+    public OptionSetValue getDirStatus() {
+        return DirStatus;
+    }
+
+    public void setDirStatus(OptionSetValue dirStatus) {
+        DirStatus = dirStatus;
+    }
+
+    public EntityReference getDirAprovador() {
+        return DirAprovador;
+    }
+
+    public void setDirAprovador(EntityReference dirAprovador) {
+        DirAprovador = dirAprovador;
+    }
+
+    public EntityReference getOs() {
         return Os;
     }
 
-    public void setOs(com.example.demointegration.model.opportunity.Os os) {
+    public void setOs(EntityReference os) {
         Os = os;
     }
 
-    public com.example.demointegration.model.opportunity.CriadoPor getCriadoPor() {
+    public EntityReference getCriadoPor() {
         return CriadoPor;
     }
 
-    public void setCriadoPor(com.example.demointegration.model.opportunity.CriadoPor criadoPor) {
+    public void setCriadoPor(EntityReference criadoPor) {
         CriadoPor = criadoPor;
     }
 
-    public com.example.demointegration.model.opportunity.Status getStatus() {
+    public OptionSetValue getStatus() {
         return Status;
     }
 
-    public void setStatus(com.example.demointegration.model.opportunity.Status status) {
+    public void setStatus(OptionSetValue status) {
         Status = status;
     }
 
-    public com.example.demointegration.model.opportunity.RazaoStatus getRazaoStatus() {
+    public OptionSetValue getRazaoStatus() {
         return RazaoStatus;
     }
 
-    public void setRazaoStatus(com.example.demointegration.model.opportunity.RazaoStatus razaoStatus) {
+    public void setRazaoStatus(OptionSetValue razaoStatus) {
         RazaoStatus = razaoStatus;
     }
 
-    public com.example.demointegration.model.opportunity.AlteradoPor getAlteradoPor() {
+    public EntityReference getAlteradoPor() {
         return AlteradoPor;
     }
 
-    public void setAlteradoPor(com.example.demointegration.model.opportunity.AlteradoPor alteradoPor) {
+    public void setAlteradoPor(EntityReference alteradoPor) {
         AlteradoPor = alteradoPor;
     }
 
@@ -474,14 +490,6 @@ public class Opportunity implements Serializable{
         Topico = topico;
     }
 
-    public String getClienteProvavel() {
-        return ClienteProvavel;
-    }
-
-    public void setClienteProvavel(String clienteProvavel) {
-        ClienteProvavel = clienteProvavel;
-    }
-
     public String getCnpj() {
         return Cnpj;
     }
@@ -498,20 +506,12 @@ public class Opportunity implements Serializable{
         DataEstimadaFechamento = dataEstimadaFechamento;
     }
 
-    public String getProbabilidade() {
+    public Number getProbabilidade() {
         return Probabilidade;
     }
 
-    public void setProbabilidade(String probabilidade) {
+    public void setProbabilidade(Number probabilidade) {
         Probabilidade = probabilidade;
-    }
-
-    public String getInteresse() {
-        return Interesse;
-    }
-
-    public void setInteresse(String interesse) {
-        Interesse = interesse;
     }
 
     public String getFasePipeline() {
@@ -554,14 +554,6 @@ public class Opportunity implements Serializable{
         MargemBruta = margemBruta;
     }
 
-    public String getCurvaUnidade() {
-        return CurvaUnidade;
-    }
-
-    public void setCurvaUnidade(String curvaUnidade) {
-        CurvaUnidade = curvaUnidade;
-    }
-
     public String getTipoInstalacao() {
         return TipoInstalacao;
     }
@@ -570,19 +562,11 @@ public class Opportunity implements Serializable{
         TipoInstalacao = tipoInstalacao;
     }
 
-    public String getFacilities() {
-        return Facilities;
-    }
-
-    public void setFacilities(String facilities) {
-        Facilities = facilities;
-    }
-
-    public String getIdentificadoFornecedorAtual() {
+    public Boolean getIdentificadoFornecedorAtual() {
         return IdentificadoFornecedorAtual;
     }
 
-    public void setIdentificadoFornecedorAtual(String identificadoFornecedorAtual) {
+    public void setIdentificadoFornecedorAtual(Boolean identificadoFornecedorAtual) {
         IdentificadoFornecedorAtual = identificadoFornecedorAtual;
     }
 
@@ -634,28 +618,12 @@ public class Opportunity implements Serializable{
         GerNacData = gerNacData;
     }
 
-    public String getDirStatus() {
-        return DirStatus;
-    }
-
-    public void setDirStatus(String dirStatus) {
-        DirStatus = dirStatus;
-    }
-
     public String getDirDescricao() {
         return DirDescricao;
     }
 
     public void setDirDescricao(String dirDescricao) {
         DirDescricao = dirDescricao;
-    }
-
-    public String getDirAprovador() {
-        return DirAprovador;
-    }
-
-    public void setDirAprovador(String dirAprovador) {
-        DirAprovador = dirAprovador;
     }
 
     public String getDirData() {
@@ -674,153 +642,7 @@ public class Opportunity implements Serializable{
         DataAlteracao = dataAlteracao;
     }
 
-
-    /*Inside Properties*/
-
-
-    public String getTipoServicoId() {
-        return TipoServico.getId();
-    }
-
-    public void setTipoServicoId(String tipoServicoId) {
-        TipoServicoId = tipoServicoId;
-    }
-
-    public String getTipoServicoName() {
-        return TipoServico.getName();
-    }
-
-    public void setTipoServicoName(String tipoServicoName) {
-        TipoServicoName = tipoServicoName;
-    }
-
-    public String getProprietarioId() {
-        return Proprietario.getId();
-    }
-
-    public void setProprietarioId(String proprietarioId) {
-        ProprietarioId = proprietarioId;
-    }
-
-    public String getProprietarioName() {
-        return Proprietario.getName();
-    }
-
-    public void setProprietarioName(String proprietarioName) {
-        ProprietarioName = proprietarioName;
-    }
-
-    public String getContaId() {
-        return Conta.getId();
-    }
-
-    public void setContaId(String contaId) {
-        ContaId = contaId;
-    }
-
-    public String getContaName() {
-        return Conta.getName();
-    }
-
-    public void setContaName(String contaName) {
-        ContaName = contaName;
-    }
-
-    public String getUnidadeNegocioId() {
-        return UnidadeNegocio.getId();
-    }
-
-    public void setUnidadeNegocioId(String unidadeNegocioId) {
-        UnidadeNegocioId = unidadeNegocioId;
-    }
-
-    public String getUnidadeNegocioName() {
-        return UnidadeNegocio.getName();
-    }
-
-    public void setUnidadeNegocioName(String unidadeNegocioName) {
-        UnidadeNegocioName = unidadeNegocioName;
-    }
-
-    public String getFilialId() {
-        return Filial != null ? Filial.getId() : "";
-    }
-
-    public void setFilialId(String filialId) {
-        FilialId = filialId;
-    }
-
-    public String getFilialName() {
-        return Filial != null ? Filial.getName() : "";
-    }
-
-    public void setFilialName(String filialName) {
-        FilialName = filialName;
-    }
-
-    public String getGerNacAprovadorId() {
-        return GerNacAprovador != null? GerNacAprovador.getId() : "";
-    }
-
-    public void setGerNacAprovadorId(String gerNacAprovadorId) {
-        GerNacAprovadorId = gerNacAprovadorId;
-    }
-
-    public String getGerNacAprovadorName() {
-        return GerNacAprovador != null? GerNacAprovador.getName() : "";
-    }
-
-    public void setGerNacAprovadorName(String gerNacAprovadorName) {
-        GerNacAprovadorName = gerNacAprovadorName;
-    }
-
-    public String getOsId() {
-        return Os != null ? Os.getId() : "";
-    }
-
-    public void setOsId(String osId) {
-        OsId = osId;
-    }
-
-    public String getOsName() {
-        return Os != null ? Os.getName() : "";
-    }
-
-    public void setOsName(String osName) {
-        OsName = osName;
-    }
-
-    public String getCriadoPorId() {
-        return CriadoPor.getId();
-    }
-
-    public void setCriadoPorId(String criadoPorId) {
-        CriadoPorId = criadoPorId;
-    }
-
-    public String getCriadoPorName() {
-        return CriadoPor.getName();
-    }
-
-    public void setCriadoPorName(String criadoPorName) {
-        CriadoPorName = criadoPorName;
-    }
-
-    public String getAlteradoPorId() {
-        return AlteradoPor.getId();
-    }
-
-    public void setAlteradoPorId(String alteradoPorId) {
-        AlteradoPorId = alteradoPorId;
-    }
-
-    public String getAlteradoPorName() {
-        return AlteradoPor.getName();
-    }
-
-    public void setAlteradoPorName(String alteradoPorName) {
-        AlteradoPorName = alteradoPorName;
-    }
+    /*Value*/
 
     public Number getValorEstimaPropostaValue() {
         return ValorEstimaProposta != null ? ValorEstimaProposta.getValue() : 0;
@@ -828,6 +650,14 @@ public class Opportunity implements Serializable{
 
     public void setValorEstimaPropostaValue(Number valorEstimaPropostaValue) {
         ValorEstimaPropostaValue = valorEstimaPropostaValue;
+    }
+
+    public Number getInteresseValue() {
+        return Interesse != null ? Interesse.getValue() : 0;
+    }
+
+    public void setInteresseValue(Number interesseValue) {
+        InteresseValue = interesseValue;
     }
 
     public Number getReceitaRealValue() {
@@ -838,6 +668,22 @@ public class Opportunity implements Serializable{
         ReceitaRealValue = receitaRealValue;
     }
 
+    public Number getCurvaUnidadeValue() {
+        return CurvaUnidade != null ? CurvaUnidade.getValue() : 0;
+    }
+
+    public void setCurvaUnidadeValue(Number curvaUnidadeValue) {
+        CurvaUnidadeValue = curvaUnidadeValue;
+    }
+
+    public Number getFacilitiesValue() {
+        return Facilities != null ? Facilities.getValue() : 0;
+    }
+
+    public void setFacilitiesValue(Number facilitiesValue) {
+        FacilitiesValue = facilitiesValue;
+    }
+
     public Number getGerNacStatusValue() {
         return GerNacStatus != null ? GerNacStatus.getValue() : 0;
     }
@@ -846,8 +692,16 @@ public class Opportunity implements Serializable{
         GerNacStatusValue = gerNacStatusValue;
     }
 
+    public Number getDirStatusValue() {
+        return DirStatus != null ? DirStatus.getValue() : 0;
+    }
+
+    public void setDirStatusValue(Number dirStatusValue) {
+        DirStatusValue = dirStatusValue;
+    }
+
     public Number getStatusValue() {
-        return Status.getValue();
+        return Status != null ? Status.getValue() : 0;
     }
 
     public void setStatusValue(Number statusValue) {
@@ -855,52 +709,224 @@ public class Opportunity implements Serializable{
     }
 
     public Number getRazaoStatusValue() {
-        return RazaoStatus.getValue();
+        return RazaoStatus != null? RazaoStatus.getValue() : 0;
     }
 
     public void setRazaoStatusValue(Number razaoStatusValue) {
         RazaoStatusValue = razaoStatusValue;
     }
 
-    /*Overrides*/
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Opportunity that = (Opportunity) o;
-        return OportunidadeId == that.OportunidadeId;
+    /*Id*/
+
+    public String getClienteProvavelId() {
+        return ClienteProvavel != null ? ClienteProvavel.getId() : "";
     }
 
-    @Override
-    public int hashCode() {
+    public void setClienteProvavelId(String clienteProvavelId) {
+        ClienteProvavelId = clienteProvavelId;
+    }
 
-        return Objects.hash(OportunidadeId);
+    public String getTipoServicoId() {
+        return TipoServico != null ? TipoServico.getId() : "";
+    }
+
+    public void setTipoServicoId(String tipoServicoId) {
+        TipoServicoId = tipoServicoId;
+    }
+
+    public String getProprietarioId() {
+        return Proprietario != null ? Proprietario.getId() : "";
+    }
+
+    public void setProprietarioId(String proprietarioId) {
+        ProprietarioId = proprietarioId;
+    }
+
+    public String getContaId() {
+        return Conta != null ? Conta.getId() : "";
+    }
+
+    public void setContaId(String contaId) {
+        ContaId = contaId;
+    }
+
+    public String getUnidadeNegocioId() {
+        return UnidadeNegocio != null ? UnidadeNegocio.getId() : "";
+    }
+
+    public void setUnidadeNegocioId(String unidadeNegocioId) {
+        UnidadeNegocioId = unidadeNegocioId;
+    }
+
+    public String getFilialId() {
+        return Filial != null ? Filial.getId() : "";
+    }
+
+    public void setFilialId(String filialId) {
+        FilialId = filialId;
+    }
+
+    public String getGerNacAprovadorId() {
+        return GerNacAprovador != null ? GerNacAprovador.getId() : "";
+    }
+
+    public void setGerNacAprovadorId(String gerNacAprovadorId) {
+        GerNacAprovadorId = gerNacAprovadorId;
+    }
+
+    public String getDirAprovadorId() {
+        return DirAprovador != null ? DirAprovador.getId() : "";
+    }
+
+    public void setDirAprovadorId(String dirAprovadorId) {
+        DirAprovadorId = dirAprovadorId;
+    }
+
+    public String getOsId() {
+        return Os != null ? Os.getId() : "";
+    }
+
+    public void setOsId(String osId) {
+        OsId = osId;
+    }
+
+    public String getCriadoPorId() {
+        return CriadoPor != null ? CriadoPor.getId() : "";
+    }
+
+    public void setCriadoPorId(String criadoPorId) {
+        CriadoPorId = criadoPorId;
+    }
+
+    public String getAlteradoPorId() {
+        return AlteradoPor != null ? AlteradoPor.getId() : "";
+    }
+
+    public void setAlteradoPorId(String alteradoPorId) {
+        AlteradoPorId = alteradoPorId;
+    }
+
+    /*Name*/
+
+    public String getClienteProvavelName() {
+        return ClienteProvavel != null ? ClienteProvavel.getName() : "";
+    }
+
+    public void setClienteProvavelName(String clienteProvavelName) {
+        ClienteProvavelName = clienteProvavelName;
+    }
+
+    public String getTipoServicoName() {
+        return TipoServico != null ? TipoServico.getName() : "";
+    }
+
+    public void setTipoServicoName(String tipoServicoName) {
+        TipoServicoName = tipoServicoName;
+    }
+
+    public String getProprietarioName() {
+        return Proprietario != null ? Proprietario.getName() : "";
+    }
+
+    public void setProprietarioName(String proprietarioName) {
+        ProprietarioName = proprietarioName;
+    }
+
+    public String getContaName() {
+        return Conta != null ? Conta.getName() : "";
+    }
+
+    public void setContaName(String contaName) {
+        ContaName = contaName;
+    }
+
+    public String getUnidadeNegocioName() {
+        return UnidadeNegocio != null ? UnidadeNegocio.getName() : "";
+    }
+
+    public void setUnidadeNegocioName(String unidadeNegocioName) {
+        UnidadeNegocioName = unidadeNegocioName;
+    }
+
+    public String getFilialName() {
+        return Filial != null ? Filial.getName() : "";
+    }
+
+    public void setFilialName(String filialName) {
+        FilialName = filialName;
+    }
+
+    public String getGerNacAprovadorName() {
+        return GerNacAprovador != null ? GerNacAprovador.getName() : "";
+    }
+
+    public void setGerNacAprovadorName(String gerNacAprovadorName) {
+        GerNacAprovadorName = gerNacAprovadorName;
+    }
+
+    public String getDirAprovadorName() {
+        return DirAprovador != null ? DirAprovador.getName() : "";
+    }
+
+    public void setDirAprovadorName(String dirAprovadorName) {
+        DirAprovadorName = dirAprovadorName;
+    }
+
+    public String getOsName() {
+        return Os != null ? Os.getName() : "";
+    }
+
+    public void setOsName(String osName) {
+        OsName = osName;
+    }
+
+    public String getCriadoPorName() {
+        return CriadoPor != null ? CriadoPor.getName() : "";
+    }
+
+    public void setCriadoPorName(String criadoPorName) {
+        CriadoPorName = criadoPorName;
+    }
+
+    public String getAlteradoPorName() {
+        return AlteradoPor != null ? AlteradoPor.getName() : "";
+    }
+
+    public void setAlteradoPorName(String alteradoPorName) {
+        AlteradoPorName = alteradoPorName;
     }
 
     public void setProperties(){
-        this.setTipoServicoId(this.getTipoServicoId());
-        this.setTipoServicoName(this.getTipoServicoName());
-        this.setProprietarioId(this.getProprietarioId());
-        this.setProprietarioName(this.getProprietarioName());
-        this.setContaId(this.getContaId());
-        this.setContaName(this.getContaName());
-        this.setUnidadeNegocioId(this.getUnidadeNegocioId());
-        this.setUnidadeNegocioName(this.getUnidadeNegocioName());
-        this.setFilialId(this.getFilialId());
-        this.setFilialName(this.getFilialName());
-        this.setGerNacAprovadorId(this.getGerNacAprovadorId());
-        this.setGerNacAprovadorName(this.getGerNacAprovadorName());
-        this.setOsId(this.getOsId());
-        this.setOsName(this.getOsName());
-        this.setCriadoPorId(this.getCriadoPorId());
-        this.setCriadoPorName(this.getCriadoPorName());
-        this.setAlteradoPorId(this.getAlteradoPorId());
-        this.setAlteradoPorName(this.getAlteradoPorName());
         this.setValorEstimaPropostaValue(this.getValorEstimaPropostaValue());
+        this.setInteresseValue(this.getInteresseValue());
         this.setReceitaRealValue(this.getReceitaRealValue());
+        this.setCurvaUnidadeValue(this.getCurvaUnidadeValue());
+        this.setFacilitiesValue(this.getFacilitiesValue());
         this.setGerNacStatusValue(this.getGerNacStatusValue());
+        this.setDirStatusValue(this.getDirStatusValue());
         this.setStatusValue(this.getStatusValue());
         this.setRazaoStatusValue(this.getRazaoStatusValue());
+        this.setClienteProvavelId(this.getClienteProvavelId());
+        this.setTipoServicoId(this.getTipoServicoId());
+        this.setProprietarioId(this.getProprietarioId());
+        this.setContaId(this.getContaId());
+        this.setUnidadeNegocioId(this.getUnidadeNegocioId());
+        this.setFilialId(this.getFilialId());
+        this.setGerNacAprovadorId(this.getGerNacAprovadorId());
+        this.setDirAprovadorId(this.getDirAprovadorId());
+        this.setOsId(this.getOsId());
+        this.setCriadoPorId(this.getCriadoPorId());
+        this.setAlteradoPorId(this.getAlteradoPorId());
+        this.setClienteProvavelName(this.getClienteProvavelName());
+        this.setTipoServicoName(this.getTipoServicoName());
+        this.setProprietarioName(this.getProprietarioName());
+        this.setContaName(this.getContaName());
+        this.setUnidadeNegocioName(this.getUnidadeNegocioName());
+        this.setFilialName(this.getFilialName());
+        this.setGerNacAprovadorName(this.getGerNacAprovadorName());
+        this.setDirAprovadorName(this.getDirAprovadorName());
+        this.setOsName(this.getOsName());
+        this.setCriadoPorName(this.getCriadoPorName());
+        this.setAlteradoPorName(this.getAlteradoPorName());
     }
-
 }

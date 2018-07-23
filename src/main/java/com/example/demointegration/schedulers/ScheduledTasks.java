@@ -129,6 +129,7 @@ public class ScheduledTasks {
 
         }
     }
+/*
 
 
     @Scheduled(fixedRateString = "${scheduler.account}")
@@ -211,5 +212,6 @@ public class ScheduledTasks {
         }
 
     }
+*/
 
 }
