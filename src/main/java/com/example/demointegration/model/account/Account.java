@@ -1,5 +1,8 @@
 package com.example.demointegration.model.account;
 
+import com.example.demointegration.model.utils.EntityReference;
+import com.example.demointegration.model.utils.Money;
+import com.example.demointegration.model.utils.OptionSetValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -10,338 +13,272 @@ import java.util.Objects;
 @Entity
 public class Account implements Serializable{
 
-    @Transient
-    @JsonProperty("TipoPessoa")
-    private TipoPessoa TipoPessoa;
-
+    /*Transient*/
     @Transient
     @JsonProperty("Proprietario")
-    private Proprietario Proprietario;
-
-    @Transient
-    @JsonProperty("OrigemCliente")
-    private OrigemCliente OrigemCliente;
-
+    private EntityReference Proprietario;
     @Transient
     @JsonProperty("SegmentoEmpresa")
-    private SegmentoEmpresa SegmentoEmpresa;
-
+    private EntityReference SegmentoEmpresa;
     @Transient
     @JsonProperty("SubsegmentoEmpresa")
-    private SubsegmentoEmpresa SubsegmentoEmpresa;
-
-    @Transient
-    @JsonProperty("Porte")
-    private Porte Porte;
-
+    private EntityReference SubsegmentoEmpresa;
     @Transient
     @JsonProperty("Cidade")
-    private Cidade Cidade;
-
+    private EntityReference Cidade;
     @Transient
     @JsonProperty("Estado")
-    private Estado Estado;
-
+    private EntityReference Estado;
     @Transient
     @JsonProperty("CriadoPor")
-    private CriadoPor CriadoPor;
-
-    @Transient
-    @JsonProperty("Status")
-    private Status Status;
-
+    private EntityReference CriadoPor;
     @Transient
     @JsonProperty("AlteradoPor")
-    private AlteradoPor AlteradoPor;
+    private EntityReference AlteradoPor;
+    @Transient
+    @JsonProperty("TipoPessoa")
+    private OptionSetValue TipoPessoa;
+    @Transient
+    @JsonProperty("ReceitaAnual")
+    private Money ReceitaAnual;
+    @Transient
+    @JsonProperty("Curva")
+    private OptionSetValue Curva;
+    @Transient
+    @JsonProperty("OrigemCliente")
+    private OptionSetValue OrigemCliente;
+    @Transient
+    @JsonProperty("Porte")
+    private OptionSetValue Porte;
+    @Transient
+    @JsonProperty("Status")
+    private OptionSetValue Status;
 
 
     /*Columns*/
+
     @Id
     @Column
     @JsonProperty("ContaId")
     private String ContaId;
-
     @Column
     @JsonProperty("Cnpj")
     private String Cnpj;
-
     @Column
     @JsonProperty("RazaoSocial")
     private String RazaoSocial;
-
     @Column
     @JsonProperty("NomeFantasia")
     private String NomeFantasia;
-
     @Column
     @JsonProperty("Telefone")
     private String Telefone;
-
     @Column
     @JsonProperty("Site")
     private String Site;
-
     @Column
     @JsonProperty("InscricaoMunicipal")
     private String InscricaoMunicipal;
-
     @Column
     @JsonProperty("InscricaoEstadual")
     private String InscricaoEstadual;
-
-    @Column
-    @JsonProperty("ReceitaAnual")
-    private String ReceitaAnual;
-
-    @Column
-    @JsonProperty("Curva")
-    private String Curva;
-
     @Column
     @JsonProperty("Cep")
     private String Cep;
-
     @Column
     @JsonProperty("Rua")
     private String Rua;
-
     @Column
     @JsonProperty("Complemento")
     private String Complemento;
-
     @Column
     @JsonProperty("Numero")
     private String Numero;
-
     @Column
     @JsonProperty("Bairro")
     private String Bairro;
-
     @Column
     @JsonProperty("Regiao")
     private String Regiao;
-
     @Column
     @JsonProperty("DataCriacao")
     private String DataCriacao;
-
     @Column
-    @JsonProperty("DataAlteracao")
+    @JsonProperty("DataAlteracao") 
     private String DataAlteracao;
 
-    /*Inside Obj*/
-
+    /*Value*/
+    
     @Column
-    @JsonProperty("ProprietarioName")
-    private String ProprietarioName;
-
+    @JsonProperty("ReceitaAnualValue")
+    private Number ReceitaAnualValue;
+    @Column
+    @JsonProperty("CurvaValue")
+    private Number CurvaValue;
+    @Column
+    @JsonProperty("OrigemClienteValue")
+    private Number OrigemClienteValue;
+    @Column
+    @JsonProperty("PorteValue")
+    private Number PorteValue;
+    @Column
+    @JsonProperty("StatusValue")
+    private Number StatusValue;
+    
+    
+    
+    /*Id*/
+    
     @Column
     @JsonProperty("ProprietarioId")
     private String ProprietarioId;
-
-    @Column
-    @JsonProperty("SegmentoEmpresaName")
-    private String SegmentoEmpresaName;
-
     @Column
     @JsonProperty("SegmentoEmpresaId")
     private String SegmentoEmpresaId;
-
-    @Column
-    @JsonProperty("SubsegmentoEmpresaName")
-    private String SubsegmentoEmpresaName;
-
     @Column
     @JsonProperty("SubsegmentoEmpresaId")
     private String SubsegmentoEmpresaId;
-
-    @Column
-    @JsonProperty("CidadeName")
-    private String CidadeName;
-
     @Column
     @JsonProperty("CidadeId")
     private String CidadeId;
-
-    @Column
-    @JsonProperty("EstadoName")
-    private String EstadoName;
-
     @Column
     @JsonProperty("EstadoId")
     private String EstadoId;
-
-    @Column
-    @JsonProperty("CriadoPorName")
-    private String CriadoPorName;
-
     @Column
     @JsonProperty("CriadoPorId")
     private String CriadoPorId;
-
-    @Column
-    @JsonProperty("AlteradoPorName")
-    private String AlteradoPorName;
-
     @Column
     @JsonProperty("AlteradoPorId")
     private String AlteradoPorId;
 
-    /*Value*/
-    @Column
-    @JsonProperty("TipoPessoaValue")
-    private Number TipoPessoaValue;
+    /*Name*/
 
     @Column
-    @JsonProperty("OrigemClienteValue")
-    private Number OrigemClienteValue;
-
+    @JsonProperty("ProprietarioName")
+    private String ProprietarioName;
     @Column
-    @JsonProperty("PorteValue")
-    private Number PorteValue;
-
+    @JsonProperty("SegmentoEmpresaName")
+    private String SegmentoEmpresaName;
     @Column
-    @JsonProperty("StatusValue")
-    private Number StatusValue;
+    @JsonProperty("SubsegmentoEmpresaName")
+    private String SubsegmentoEmpresaName;
+    @Column
+    @JsonProperty("CidadeName")
+    private String CidadeName;
+    @Column
+    @JsonProperty("EstadoName")
+    private String EstadoName;
+    @Column
+    @JsonProperty("CriadoPorName")
+    private String CriadoPorName;
+    @Column
+    @JsonProperty("AlteradoPorName")
+    private String AlteradoPorName;
 
     public Account(){};
 
-    public Account(com.example.demointegration.model.account.TipoPessoa tipoPessoa, com.example.demointegration.model.account.Proprietario proprietario, com.example.demointegration.model.account.OrigemCliente origemCliente, com.example.demointegration.model.account.SegmentoEmpresa segmentoEmpresa, com.example.demointegration.model.account.SubsegmentoEmpresa subsegmentoEmpresa, com.example.demointegration.model.account.Porte porte, com.example.demointegration.model.account.Cidade cidade, com.example.demointegration.model.account.Estado estado, com.example.demointegration.model.account.CriadoPor criadoPor, com.example.demointegration.model.account.Status status, com.example.demointegration.model.account.AlteradoPor alteradoPor, String contaId, String cnpj, String razaoSocial, String nomeFantasia, String telefone, String site, String inscricaoMunicipal, String inscricaoEstadual, String receitaAnual, String curva, String cep, String rua, String complemento, String numero, String bairro, String regiao, String dataCriacao, String dataAlteracao, String proprietarioName, String proprietarioId, String segmentoEmpresaName, String segmentoEmpresaId, String subsegmentoEmpresaName, String subsegmentoEmpresaId, String cidadeName, String cidadeId, String estadoName, String estadoId, String criadoPorName, String criadoPorId, String alteradoPorName, String alteradoPorId, Number tipoPessoaValue, Number origemClienteValue, Number porteValue, Number statusValue) {
-        TipoPessoa = tipoPessoa;
-        Proprietario = proprietario;
-        OrigemCliente = origemCliente;
-        SegmentoEmpresa = segmentoEmpresa;
-        SubsegmentoEmpresa = subsegmentoEmpresa;
-        Porte = porte;
-        Cidade = cidade;
-        Estado = estado;
-        CriadoPor = criadoPor;
-        Status = status;
-        AlteradoPor = alteradoPor;
-        ContaId = contaId;
-        Cnpj = cnpj;
-        RazaoSocial = razaoSocial;
-        NomeFantasia = nomeFantasia;
-        Telefone = telefone;
-        Site = site;
-        InscricaoMunicipal = inscricaoMunicipal;
-        InscricaoEstadual = inscricaoEstadual;
-        ReceitaAnual = receitaAnual;
-        Curva = curva;
-        Cep = cep;
-        Rua = rua;
-        Complemento = complemento;
-        Numero = numero;
-        Bairro = bairro;
-        Regiao = regiao;
-        DataCriacao = dataCriacao;
-        DataAlteracao = dataAlteracao;
-        ProprietarioName = proprietarioName;
-        ProprietarioId = proprietarioId;
-        SegmentoEmpresaName = segmentoEmpresaName;
-        SegmentoEmpresaId = segmentoEmpresaId;
-        SubsegmentoEmpresaName = subsegmentoEmpresaName;
-        SubsegmentoEmpresaId = subsegmentoEmpresaId;
-        CidadeName = cidadeName;
-        CidadeId = cidadeId;
-        EstadoName = estadoName;
-        EstadoId = estadoId;
-        CriadoPorName = criadoPorName;
-        CriadoPorId = criadoPorId;
-        AlteradoPorName = alteradoPorName;
-        AlteradoPorId = alteradoPorId;
-        TipoPessoaValue = tipoPessoaValue;
-        OrigemClienteValue = origemClienteValue;
-        PorteValue = porteValue;
-        StatusValue = statusValue;
-    }
-
-    public com.example.demointegration.model.account.TipoPessoa getTipoPessoa() {
-        return TipoPessoa;
-    }
-
-    public void setTipoPessoa(com.example.demointegration.model.account.TipoPessoa tipoPessoa) {
-        TipoPessoa = tipoPessoa;
-    }
-
-    public com.example.demointegration.model.account.Proprietario getProprietario() {
+    public EntityReference getProprietario() {
         return Proprietario;
     }
 
-    public void setProprietario(com.example.demointegration.model.account.Proprietario proprietario) {
+    public void setProprietario(EntityReference proprietario) {
         Proprietario = proprietario;
     }
 
-    public com.example.demointegration.model.account.OrigemCliente getOrigemCliente() {
-        return OrigemCliente;
-    }
-
-    public void setOrigemCliente(com.example.demointegration.model.account.OrigemCliente origemCliente) {
-        OrigemCliente = origemCliente;
-    }
-
-    public com.example.demointegration.model.account.SegmentoEmpresa getSegmentoEmpresa() {
+    public EntityReference getSegmentoEmpresa() {
         return SegmentoEmpresa;
     }
 
-    public void setSegmentoEmpresa(com.example.demointegration.model.account.SegmentoEmpresa segmentoEmpresa) {
+    public void setSegmentoEmpresa(EntityReference segmentoEmpresa) {
         SegmentoEmpresa = segmentoEmpresa;
     }
 
-    public com.example.demointegration.model.account.SubsegmentoEmpresa getSubsegmentoEmpresa() {
+    public EntityReference getSubsegmentoEmpresa() {
         return SubsegmentoEmpresa;
     }
 
-    public void setSubsegmentoEmpresa(com.example.demointegration.model.account.SubsegmentoEmpresa subsegmentoEmpresa) {
+    public void setSubsegmentoEmpresa(EntityReference subsegmentoEmpresa) {
         SubsegmentoEmpresa = subsegmentoEmpresa;
     }
 
-    public com.example.demointegration.model.account.Porte getPorte() {
-        return Porte;
-    }
-
-    public void setPorte(com.example.demointegration.model.account.Porte porte) {
-        Porte = porte;
-    }
-
-    public com.example.demointegration.model.account.Cidade getCidade() {
+    public EntityReference getCidade() {
         return Cidade;
     }
 
-    public void setCidade(com.example.demointegration.model.account.Cidade cidade) {
+    public void setCidade(EntityReference cidade) {
         Cidade = cidade;
     }
 
-    public com.example.demointegration.model.account.Estado getEstado() {
+    public EntityReference getEstado() {
         return Estado;
     }
 
-    public void setEstado(com.example.demointegration.model.account.Estado estado) {
+    public void setEstado(EntityReference estado) {
         Estado = estado;
     }
 
-    public com.example.demointegration.model.account.CriadoPor getCriadoPor() {
+    public EntityReference getCriadoPor() {
         return CriadoPor;
     }
 
-    public void setCriadoPor(com.example.demointegration.model.account.CriadoPor criadoPor) {
+    public void setCriadoPor(EntityReference criadoPor) {
         CriadoPor = criadoPor;
     }
 
-    public com.example.demointegration.model.account.Status getStatus() {
-        return Status;
-    }
-
-    public void setStatus(com.example.demointegration.model.account.Status status) {
-        Status = status;
-    }
-
-    public com.example.demointegration.model.account.AlteradoPor getAlteradoPor() {
+    public EntityReference getAlteradoPor() {
         return AlteradoPor;
     }
 
-    public void setAlteradoPor(com.example.demointegration.model.account.AlteradoPor alteradoPor) {
+    public void setAlteradoPor(EntityReference alteradoPor) {
         AlteradoPor = alteradoPor;
+    }
+
+    public OptionSetValue getTipoPessoa() {
+        return TipoPessoa;
+    }
+
+    public void setTipoPessoa(OptionSetValue tipoPessoa) {
+        TipoPessoa = tipoPessoa;
+    }
+
+    public Money getReceitaAnual() {
+        return ReceitaAnual;
+    }
+
+    public void setReceitaAnual(Money receitaAnual) {
+        ReceitaAnual = receitaAnual;
+    }
+
+    public OptionSetValue getCurva() {
+        return Curva;
+    }
+
+    public void setCurva(OptionSetValue curva) {
+        Curva = curva;
+    }
+
+    public OptionSetValue getOrigemCliente() {
+        return OrigemCliente;
+    }
+
+    public void setOrigemCliente(OptionSetValue origemCliente) {
+        OrigemCliente = origemCliente;
+    }
+
+    public OptionSetValue getPorte() {
+        return Porte;
+    }
+
+    public void setPorte(OptionSetValue porte) {
+        Porte = porte;
+    }
+
+    public OptionSetValue getStatus() {
+        return Status;
+    }
+
+    public void setStatus(OptionSetValue status) {
+        Status = status;
     }
 
     public String getContaId() {
@@ -408,22 +345,6 @@ public class Account implements Serializable{
         InscricaoEstadual = inscricaoEstadual;
     }
 
-    public String getReceitaAnual() {
-        return ReceitaAnual;
-    }
-
-    public void setReceitaAnual(String receitaAnual) {
-        ReceitaAnual = receitaAnual;
-    }
-
-    public String getCurva() {
-        return Curva;
-    }
-
-    public void setCurva(String curva) {
-        Curva = curva;
-    }
-
     public String getCep() {
         return Cep;
     }
@@ -488,128 +409,24 @@ public class Account implements Serializable{
         DataAlteracao = dataAlteracao;
     }
 
-    public String getProprietarioName() {
-        return Proprietario.getName();
+    public Number getReceitaAnualValue() {
+        return ReceitaAnual != null ? ReceitaAnual.getValue() : 0;
     }
 
-    public void setProprietarioName(String proprietarioName) {
-        ProprietarioName = proprietarioName;
+    public void setReceitaAnualValue(Number receitaAnualValue) {
+        ReceitaAnualValue = receitaAnualValue;
     }
 
-    public String getProprietarioId() {
-        return Proprietario.getId();
+    public Number getCurvaValue() {
+        return Curva != null ? Curva.getValue() : 0;
     }
 
-    public void setProprietarioId(String proprietarioId) {
-        ProprietarioId = proprietarioId;
-    }
-
-    public String getSegmentoEmpresaName() {
-        return SegmentoEmpresa.getName();
-    }
-
-    public void setSegmentoEmpresaName(String segmentoEmpresaName) {
-        SegmentoEmpresaName = segmentoEmpresaName;
-    }
-
-    public String getSegmentoEmpresaId() {
-        return SegmentoEmpresa.getId();
-    }
-
-    public void setSegmentoEmpresaId(String segmentoEmpresaId) {
-        SegmentoEmpresaId = segmentoEmpresaId;
-    }
-
-    public String getSubsegmentoEmpresaName() {
-        return SubsegmentoEmpresa.getName();
-    }
-
-    public void setSubsegmentoEmpresaName(String subsegmentoEmpresaName) {
-        SubsegmentoEmpresaName = subsegmentoEmpresaName;
-    }
-
-    public String getSubsegmentoEmpresaId() {
-        return SubsegmentoEmpresa.getId();
-    }
-
-    public void setSubsegmentoEmpresaId(String subsegmentoEmpresaId) {
-        SubsegmentoEmpresaId = subsegmentoEmpresaId;
-    }
-
-    public String getCidadeName() {
-        return Cidade.getName();
-    }
-
-    public void setCidadeName(String cidadeName) {
-        CidadeName = cidadeName;
-    }
-
-    public String getCidadeId() {
-        return Cidade.getId();
-    }
-
-    public void setCidadeId(String cidadeId) {
-        CidadeId = cidadeId;
-    }
-
-    public String getEstadoName() {
-        return Estado.getName();
-    }
-
-    public void setEstadoName(String estadoName) {
-        EstadoName = estadoName;
-    }
-
-    public String getEstadoId() {
-        return Estado.getId();
-    }
-
-    public void setEstadoId(String estadoId) {
-        EstadoId = estadoId;
-    }
-
-    public String getCriadoPorName() {
-        return CriadoPor.getName();
-    }
-
-    public void setCriadoPorName(String criadoPorName) {
-        CriadoPorName = criadoPorName;
-    }
-
-    public String getCriadoPorId() {
-        return CriadoPor.getId();
-    }
-
-    public void setCriadoPorId(String criadoPorId) {
-        CriadoPorId = criadoPorId;
-    }
-
-    public String getAlteradoPorName() {
-        return AlteradoPor.getName();
-    }
-
-    public void setAlteradoPorName(String alteradoPorName) {
-        AlteradoPorName = alteradoPorName;
-    }
-
-    public String getAlteradoPorId() {
-        return AlteradoPor.getId();
-    }
-
-    public void setAlteradoPorId(String alteradoPorId) {
-        AlteradoPorId = alteradoPorId;
-    }
-
-    public Number getTipoPessoaValue() {
-        return TipoPessoa.getValue();
-    }
-
-    public void setTipoPessoaValue(Number tipoPessoaValue) {
-        TipoPessoaValue = tipoPessoaValue;
+    public void setCurvaValue(Number curvaValue) {
+        CurvaValue = curvaValue;
     }
 
     public Number getOrigemClienteValue() {
-        return OrigemCliente.getValue();
+        return OrigemCliente != null ? OrigemCliente.getValue() : 0;
     }
 
     public void setOrigemClienteValue(Number origemClienteValue) {
@@ -617,7 +434,7 @@ public class Account implements Serializable{
     }
 
     public Number getPorteValue() {
-        return Porte.getValue();
+        return Porte != null ? Porte.getValue() : 0;
     }
 
     public void setPorteValue(Number porteValue) {
@@ -625,12 +442,126 @@ public class Account implements Serializable{
     }
 
     public Number getStatusValue() {
-        return Status.getValue();
+        return Status != null ? Status.getValue() : 0;
     }
 
     public void setStatusValue(Number statusValue) {
         StatusValue = statusValue;
     }
+
+    public String getProprietarioId() {
+        return Proprietario != null ? Proprietario.getId() : "";
+    }
+
+    public void setProprietarioId(String proprietarioId) {
+        ProprietarioId = proprietarioId;
+    }
+
+    public String getSegmentoEmpresaId() {
+        return SegmentoEmpresa != null ? SegmentoEmpresa.getId() : "";
+    }
+
+    public void setSegmentoEmpresaId(String segmentoEmpresaId) {
+        SegmentoEmpresaId = segmentoEmpresaId;
+    }
+
+    public String getSubsegmentoEmpresaId() {
+        return SubsegmentoEmpresa != null ? SubsegmentoEmpresa.getId() : "";
+    }
+
+    public void setSubsegmentoEmpresaId(String subsegmentoEmpresaId) {
+        SubsegmentoEmpresaId = subsegmentoEmpresaId;
+    }
+
+    public String getCidadeId() {
+        return Cidade != null ? Cidade.getId() : "";
+    }
+
+    public void setCidadeId(String cidadeId) {
+        CidadeId = cidadeId;
+    }
+
+    public String getEstadoId() {
+        return Estado != null ? Estado.getId() : "";
+    }
+
+    public void setEstadoId(String estadoId) {
+        EstadoId = estadoId;
+    }
+
+    public String getCriadoPorId() {
+        return CriadoPor != null ? CriadoPor.getId() : "";
+    }
+
+    public void setCriadoPorId(String criadoPorId) {
+        CriadoPorId = criadoPorId;
+    }
+
+    public String getAlteradoPorId() {
+        return AlteradoPor != null ? AlteradoPor.getId() : "";
+    }
+
+    public void setAlteradoPorId(String alteradoPorId) {
+        AlteradoPorId = alteradoPorId;
+    }
+
+    public String getProprietarioName() {
+        return Proprietario != null ? Proprietario.getName() : "";
+    }
+
+    public void setProprietarioName(String proprietarioName) {
+        ProprietarioName = proprietarioName;
+    }
+
+    public String getSegmentoEmpresaName() {
+        return SegmentoEmpresa != null ? SegmentoEmpresa.getName() : "";
+    }
+
+    public void setSegmentoEmpresaName(String segmentoEmpresaName) {
+        SegmentoEmpresaName = segmentoEmpresaName;
+    }
+
+    public String getSubsegmentoEmpresaName() {
+        return SubsegmentoEmpresa != null ? SubsegmentoEmpresa.getName() : "";
+    }
+
+    public void setSubsegmentoEmpresaName(String subsegmentoEmpresaName) {
+        SubsegmentoEmpresaName = subsegmentoEmpresaName;
+    }
+
+    public String getCidadeName() {
+        return Cidade != null ? Cidade.getName() : "";
+    }
+
+    public void setCidadeName(String cidadeName) {
+        CidadeName = cidadeName;
+    }
+
+    public String getEstadoName() {
+        return Estado != null ? Estado.getName() : "";
+    }
+
+    public void setEstadoName(String estadoName) {
+        EstadoName = estadoName;
+    }
+
+    public String getCriadoPorName() {
+        return CriadoPor != null ? CriadoPor.getName() : "";
+    }
+
+    public void setCriadoPorName(String criadoPorName) {
+        CriadoPorName = criadoPorName;
+    }
+
+    public String getAlteradoPorName() {
+        return AlteradoPor != null ? AlteradoPor.getName() : "";
+    }
+
+    public void setAlteradoPorName(String alteradoPorName) {
+        AlteradoPorName = alteradoPorName;
+    }
+
+    /*equals hash code*/
 
     @Override
     public boolean equals(Object o) {
@@ -646,24 +577,27 @@ public class Account implements Serializable{
         return Objects.hash(ContaId);
     }
 
+    /*set properties*/
+
     public void setProperties(){
-        this.setProprietarioName(this.getProprietarioName());
-        this.setProprietarioId(this.getProprietarioId());
-        this.setSegmentoEmpresaName(this.getSegmentoEmpresaName());
-        this.setSegmentoEmpresaId(this.getSegmentoEmpresaId());
-        this.setSubsegmentoEmpresaName(this.getSubsegmentoEmpresaName());
-        this.setSubsegmentoEmpresaId(this.getSubsegmentoEmpresaId());
-        this.setCidadeName(this.getCidadeName());
-        this.setCidadeId(this.getCidadeId());
-        this.setEstadoName(this.getEstadoName());
-        this.setEstadoId(this.getEstadoId());
-        this.setCriadoPorName(this.getCriadoPorName());
-        this.setCriadoPorId(this.getCriadoPorId());
-        this.setAlteradoPorName(this.getAlteradoPorName());
-        this.setAlteradoPorId(this.getAlteradoPorId());
-        this.setTipoPessoaValue(this.getTipoPessoaValue());
+        this.setReceitaAnualValue(this.getReceitaAnualValue());
+        this.setCurvaValue(this.getCurvaValue());
         this.setOrigemClienteValue(this.getOrigemClienteValue());
         this.setPorteValue(this.getPorteValue());
         this.setStatusValue(this.getStatusValue());
+        this.setProprietarioId(this.getProprietarioId());
+        this.setSegmentoEmpresaId(this.getSegmentoEmpresaId());
+        this.setSubsegmentoEmpresaId(this.getSubsegmentoEmpresaId());
+        this.setCidadeId(this.getCidadeId());
+        this.setEstadoId(this.getEstadoId());
+        this.setCriadoPorId(this.getCriadoPorId());
+        this.setAlteradoPorId(this.getAlteradoPorId());
+        this.setProprietarioName(this.getProprietarioName());
+        this.setSegmentoEmpresaName(this.getSegmentoEmpresaName());
+        this.setSubsegmentoEmpresaName(this.getSubsegmentoEmpresaName());
+        this.setCidadeName(this.getCidadeName());
+        this.setEstadoName(this.getEstadoName());
+        this.setCriadoPorName(this.getCriadoPorName());
+        this.setAlteradoPorName(this.getAlteradoPorName());
     }
 }

@@ -129,8 +129,6 @@ public class ScheduledTasks {
 
         }
     }
-/*
-
 
     @Scheduled(fixedRateString = "${scheduler.account}")
     public void scheduleFetchAccount() {
@@ -172,7 +170,6 @@ public class ScheduledTasks {
         }
     }
 
-
     @Scheduled(fixedRateString = "${scheduler.unity}")
     public void scheduleFetchUnity() {
 
@@ -212,6 +209,6 @@ public class ScheduledTasks {
         }
 
     }
-*/
+
 
 }
