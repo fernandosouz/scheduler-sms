@@ -8,18 +8,28 @@ import javax.persistence.Entity;
 @Entity
 public class DataIntegration extends AbstractEntity {
 
-    private String name;
-
     private Boolean integrated;
 
     private Integer integrationAttempts;
 
-    public String getName() {
-        return name;
+    private String phoneNumber;
+
+    private String message;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Boolean getIntegrated() {
